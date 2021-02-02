@@ -11,13 +11,17 @@ function init() {
 
     document.body.appendChild(renderer.domElement);
 
+    addCube();
+
+    camera.position.z = 6;
+    camera.position.y = 0.2;
+}
+
+function addCube(){
     const geometry = new THREE.BoxGeometry( 2, 2, 2 );
     const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
     cube = new THREE.Mesh( geometry, material );
     scene.add(cube);
-
-    camera.position.z = 6;
-    camera.position.y = 0.5;
 }
 
 window.addEventListener("resize", () => {
