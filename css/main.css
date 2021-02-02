@@ -1,6 +1,10 @@
 body {
     margin: 0;
     height: 1000vh;
+    background-image: url('../assets/images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;  
+    background-size: cover;
 }
 
 canvas {

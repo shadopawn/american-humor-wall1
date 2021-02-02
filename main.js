@@ -5,8 +5,8 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
-    renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setClearColor("#949db0");
+    renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+    renderer.setClearColor(0x000000, 0 );
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     document.body.appendChild(renderer.domElement);
