@@ -16,7 +16,8 @@ function init() {
     cube = new THREE.Mesh( geometry, material );
     scene.add(cube);
 
-    camera.position.z = 5;
+    camera.position.z = 6;
+    camera.position.y = 0.5;
 }
 
 window.addEventListener("resize", () => {
@@ -25,12 +26,22 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
 });
 
+window.onscroll = function (e) {
+    if(this.oldScroll > this.scrollY){
+        //scroll up
+        cube.rotation.y += 0.015;
+    }else{
+        //scroll down
+        cube.rotation.y -= 0.015;
+    }
+
+    this.oldScroll = this.scrollY;
+}
+
 function animate() {
     requestAnimationFrame(animate);
 
     renderer.render(scene, camera);
-
-    cube.rotation.y += 0.01;
 }
 
 init();
