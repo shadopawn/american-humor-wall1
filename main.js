@@ -1,4 +1,4 @@
-let scene, camera, renderer, cube;
+let scene, camera, renderer, cube, microphone;
 
 function init() {
     scene = new THREE.Scene();
@@ -11,9 +11,10 @@ function init() {
 
     document.body.appendChild(renderer.domElement);
 
-    addCube();
+    //addCube();
+    addMicrophone();
 
-    camera.position.z = 6;
+    camera.position.z = 4;
     camera.position.y = 0.2;
 }
 
@@ -22,6 +23,22 @@ function addCube(){
     const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
     cube = new THREE.Mesh( geometry, material );
     scene.add(cube);
+}
+
+function addMicrophone(){
+    const loader = new THREE.GLTFLoader();
+
+    loader.load( 'assets/models/microphone/scene.gltf', function ( gltf ) {
+
+        microphone = gltf.scene
+
+        scene.add( gltf.scene );
+
+    }, undefined, function ( error ) {
+
+        console.error( error );
+
+    } );
 }
 
 window.addEventListener("resize", () => {
@@ -33,10 +50,10 @@ window.addEventListener("resize", () => {
 window.onscroll = function (e) {
     if(this.oldScroll > this.scrollY){
         //scroll up
-        cube.rotation.y += 0.015;
+        microphone.rotation.y += 0.015;
     }else{
         //scroll down
-        cube.rotation.y -= 0.015;
+        microphone.rotation.y -= 0.015;
     }
 
     this.oldScroll = this.scrollY;
