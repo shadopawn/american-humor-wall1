@@ -82,16 +82,33 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
 });
 
-window.onscroll = function (e) {
-    if(this.oldScroll > this.scrollY){
-        //scroll up
-        cameraModel.rotation.y += 0.015;
-    }else{
-        //scroll down
-        cameraModel.rotation.y -= 0.015;
+var getScrollSpeed = (function(settings){
+    settings = settings || {};
+
+    var lastPos, newPos, timer, delta, 
+        delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
+
+    function clear() {
+      lastPos = null;
+      delta = 0;
     }
 
-    this.oldScroll = this.scrollY;
+    clear();
+
+    return function(){
+      newPos = window.scrollY;
+      if ( lastPos != null ){ // && newPos < maxScroll 
+        delta = newPos -  lastPos;
+      }
+      lastPos = newPos;
+      clearTimeout(timer);
+      timer = setTimeout(clear, delay);
+      return delta;
+    };
+})();
+
+window.onscroll = function (e) {
+    cameraModel.rotation.y += getScrollSpeed()/1000
 }
 
 function animate() {
