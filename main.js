@@ -107,13 +107,22 @@ var getScrollSpeed = (function(settings){
     };
 })();
 
+let angularVelocity = 0;
+
 window.onscroll = function (e) {
-    cameraModel.rotation.y += getScrollSpeed()/1000
+    angularVelocity = getScrollSpeed()/1000
 }
 
 function animate() {
     requestAnimationFrame(animate);
 
+    cameraModel.rotation.y += angularVelocity;
+    if (Math.abs(angularVelocity) > 0.00001){
+        angularVelocity *= 0.99;
+    }else{
+        angularVelocity = 0;
+    }
+    
     renderer.render(scene, camera);
 }
 
