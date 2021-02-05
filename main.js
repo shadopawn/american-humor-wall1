@@ -1,4 +1,4 @@
-let scene, camera, renderer, cube, cameraModel;
+let scene, camera, renderer, cameraModel;
 
 function init() {
     scene = new THREE.Scene();
@@ -13,7 +13,7 @@ function init() {
 
     addCameraModel();
 
-    scene.add( new THREE.AxesHelper(500));
+    //scene.add( new THREE.AxesHelper(500));
     
 }
 
@@ -35,13 +35,10 @@ function setupRenderer(){
 }
 
 function setupLighting(){
-    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 300)
+    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 175)
     scene.add(hemiLight);
 
-    const alight = new THREE.AmbientLight(0xFFFFFF, 100);
-    //scene.add(alight);
-
-    const directionalLight = new THREE.DirectionalLight(0xe2f3ff,35);
+    const directionalLight = new THREE.DirectionalLight(0xe2f3ff,20);
     directionalLight.position.set(-50,50,30);
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = -0.0001;
@@ -49,7 +46,7 @@ function setupLighting(){
     directionalLight.shadow.mapSize.height = 1024*4;
     scene.add(directionalLight);
 
-    const spotLight = new THREE.SpotLight(0xffffff,30);
+    const spotLight = new THREE.SpotLight(0xffffff,20);
     spotLight.position.set(80,15,30);
     spotLight.castShadow = true;
     spotLight.shadow.bias = -0.0001;
