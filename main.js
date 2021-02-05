@@ -61,6 +61,7 @@ function addCameraModel(){
     loader.load( 'assets/models/zenit_ttl/scene.gltf', function ( gltf ) {
         cameraModel = gltf.scene
         gltf.scene.scale.set(0.05, 0.05, 0.05)
+        //gltf.scene.position.x = -15;
         model = gltf.scene.children[0]; 
           model.traverse(mesh => { if ( mesh.isMesh ) {
             mesh.castShadow = true; 
