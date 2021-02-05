@@ -80,6 +80,45 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
 });
 
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    applyAngularVelocity();
+    
+    renderer.render(scene, camera);
+}
+
+
+let angularVelocity = 0;
+
+window.onscroll = function (e) {
+    angularVelocity = getScrollSpeed()/1000
+
+    moveModelToTheSide();
+}
+
+function moveModelToTheSide(){
+    let transitionStart = 4000;
+    let transitionEnd = 4800;
+    if(window.scrollY >= transitionStart && window.scrollY <= transitionEnd){
+        let mappedXPosition = mapRange(window.scrollY, transitionStart, transitionEnd, 0, 15);
+        cameraModel.position.x = -mappedXPosition;
+    }
+}
+
+function applyAngularVelocity(){
+    if(cameraModel){
+        cameraModel.rotation.y += angularVelocity;
+    }
+
+    if (Math.abs(angularVelocity) > 0.00001){
+        angularVelocity *= 0.99;
+    }else{
+        angularVelocity = 0;
+    }
+}
+
 var getScrollSpeed = (function(settings){
     settings = settings || {};
 
@@ -105,23 +144,9 @@ var getScrollSpeed = (function(settings){
     };
 })();
 
-let angularVelocity = 0;
 
-window.onscroll = function (e) {
-    angularVelocity = getScrollSpeed()/1000
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-
-    cameraModel.rotation.y += angularVelocity;
-    if (Math.abs(angularVelocity) > 0.00001){
-        angularVelocity *= 0.99;
-    }else{
-        angularVelocity = 0;
-    }
-    
-    renderer.render(scene, camera);
+const mapRange = (num, in_min, in_max, out_min, out_max) => {
+    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 init();
