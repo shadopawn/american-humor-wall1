@@ -67,7 +67,7 @@ function addCameraModel(){
             mesh.receiveShadow = true;
             if(mesh.material.map) mesh.material.map.anisotropy = 16; 
         }});
-        scene.add( gltf.scene );
+        scene.add( cameraModel );
     }, undefined, function ( error ) {
         console.error( error );
     } );
@@ -147,6 +147,39 @@ var getScrollSpeed = (function(settings){
 const mapRange = (num, inMin, inMax, outMin, outMax) => {
     return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
+
+window.addEventListener("click", onMouseClick);
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseClick(event){
+    event.preventDefault()
+
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+    // update the picking ray with the camera and mouse position
+	raycaster.setFromCamera( mouse, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects( scene.children, true );
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+        let intersectedObject = intersects[i].object
+
+        intersectedObject.traverseAncestors(parentObject => {
+            if (parentObject == cameraModel){
+                TweenMax.to(parentObject.position, 2, {z: 5, ease: Expo.easeOut})
+                TweenMax.to(parentObject.position, 2, {y: 3, ease: Expo.easeOut})
+            }
+        });
+
+	}
+
+}
+
+
 
 init();
 animate();
