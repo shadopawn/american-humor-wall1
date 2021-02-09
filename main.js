@@ -13,7 +13,7 @@ function init() {
 
     addCameraModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
     
 }
 
@@ -60,8 +60,7 @@ function addCameraModel(){
     const loader = new THREE.GLTFLoader();
     loader.load( 'assets/models/zenit_ttl/scene.gltf', function ( gltf ) {
         cameraModel = gltf.scene
-        gltf.scene.scale.set(0.05, 0.05, 0.05)
-        //gltf.scene.position.x = -15;
+        cameraModel.scale.set(0.05, 0.05, 0.05)
         model = gltf.scene.children[0]; 
           model.traverse(mesh => { if ( mesh.isMesh ) {
             mesh.castShadow = true; 
@@ -145,8 +144,8 @@ var getScrollSpeed = (function(settings){
 })();
 
 
-const mapRange = (num, in_min, in_max, out_min, out_max) => {
-    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+const mapRange = (num, inMin, inMax, outMin, outMax) => {
+    return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
 init();
