@@ -64,10 +64,11 @@ const loader = new THREE.GLTFLoader();
 let cameraModel, microphoneModel, TelevisionModel;
 
 function addCameraModel(){
-    loader.load( 'assets/models/zenit_ttl/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
         cameraModel = gltf.scene
-        cameraModel.scale.set(0.05, 0.05, 0.05)
-        model = gltf.scene.children[0]; 
+        cameraModel.scale.set(0.07, 0.07, 0.07)
+        model = gltf.scene.children[0];
+        model.position.y = 75;
           model.traverse(mesh => { 
             if ( mesh.isMesh ) {
                 mesh.castShadow = true; 
@@ -114,7 +115,7 @@ function addTelevisionModel(){
             if ( mesh.isMesh ) {
                 mesh.castShadow = true; 
                 mesh.receiveShadow = true;
-                if(mesh.material.map) 
+                if(mesh.material.map)
                     mesh.material.map.anisotropy = 16; 
             }
         });
