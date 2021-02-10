@@ -61,7 +61,9 @@ function setupLighting(){
 }
 
 const loader = new THREE.GLTFLoader();
-let cameraModel, microphoneModel, TelevisionModel;
+let cameraModel, microphoneModel, televisionModel;
+let modelList = []
+let selectedModel;
 
 function addCameraModel(){
     loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
@@ -69,17 +71,12 @@ function addCameraModel(){
         cameraModel.scale.set(0.07, 0.07, 0.07)
         model = gltf.scene.children[0];
         model.position.y = 75;
-          model.traverse(mesh => { 
-            if ( mesh.isMesh ) {
-                mesh.castShadow = true; 
-                mesh.receiveShadow = true;
-                if(mesh.material.map) 
-                    mesh.material.map.anisotropy = 16; 
-            }
-        });
-        scene.add( cameraModel );
-    }, undefined, function ( error ) {
-        console.error( error );
+        applyMeshSettings(model);
+        scene.add(cameraModel);
+
+        modelList.push(cameraModel);
+    }, undefined, function (error) {
+        console.error(error);
     } );
 }
 
@@ -90,39 +87,40 @@ function addMicrophoneModel(){
         microphoneModel.position.x = -22;
         microphoneModel.rotation.y = 0.785398
         model = gltf.scene.children[0]; 
-          model.traverse(mesh => { 
-            if ( mesh.isMesh ) {
-                mesh.castShadow = true; 
-                mesh.receiveShadow = true;
-                if(mesh.material.map) 
-                    mesh.material.map.anisotropy = 16; 
-            }
-        });
-        scene.add( microphoneModel );
-    }, undefined, function ( error ) {
-        console.error( error );
+        applyMeshSettings(model);
+        scene.add(microphoneModel);
+
+        modelList.push(microphoneModel);
+    }, undefined, function (error) {
+        console.error(error);
     } );
 }
 
 function addTelevisionModel(){
     loader.load( 'assets/models/1980_tv/scene.gltf', function ( gltf ) {
-        TelevisionModel = gltf.scene
-        TelevisionModel.scale.set(10, 10, 10)
-        TelevisionModel.position.x = 22;
-        TelevisionModel.rotation.y = -0.2
+        televisionModel = gltf.scene
+        televisionModel.scale.set(10, 10, 10)
+        televisionModel.position.x = 22;
+        televisionModel.rotation.y = -0.2
         model = gltf.scene.children[0]; 
-          model.traverse(mesh => { 
-            if ( mesh.isMesh ) {
-                mesh.castShadow = true; 
-                mesh.receiveShadow = true;
-                if(mesh.material.map)
-                    mesh.material.map.anisotropy = 16; 
-            }
-        });
-        scene.add( TelevisionModel );
-    }, undefined, function ( error ) {
-        console.error( error );
+        applyMeshSettings(model);
+        scene.add(televisionModel);
+
+        modelList.push(televisionModel);
+    }, undefined, function (error) {
+        console.error(error);
     } );
+}
+
+function applyMeshSettings(model){
+    model.traverse(mesh => { 
+        if ( mesh.isMesh ) {
+            mesh.castShadow = true; 
+            mesh.receiveShadow = true;
+            if(mesh.material.map) 
+                mesh.material.map.anisotropy = 16; 
+        }
+    });
 }
 
 
@@ -155,13 +153,14 @@ function moveModelToTheSide(){
     let transitionEnd = 4800;
     if(window.scrollY >= transitionStart && window.scrollY <= transitionEnd){
         let mappedXPosition = mapRange(window.scrollY, transitionStart, transitionEnd, 0, 15);
-        cameraModel.position.x = -mappedXPosition;
+        if(selectedModel)
+            selectedModel.position.x = -mappedXPosition;
     }
 }
 
 function applyAngularVelocity(){
-    if(cameraModel){
-        cameraModel.rotation.y += angularVelocity;
+    if(selectedModel){
+        selectedModel.rotation.y += angularVelocity;
     }
 
     if (Math.abs(angularVelocity) > 0.00001){
@@ -222,9 +221,8 @@ function onMouseClick(event){
         let intersectedObject = intersects[i].object
 
         intersectedObject.traverseAncestors(parentObject => {
-            if (parentObject == cameraModel){
-                TweenMax.to(parentObject.position, 2, {z: 5, ease: Expo.easeOut})
-                TweenMax.to(parentObject.position, 2, {y: 3, ease: Expo.easeOut})
+            if (modelList.includes(parentObject)){
+                selectModel(parentObject);
             }
         });
 
@@ -232,6 +230,29 @@ function onMouseClick(event){
 
 }
 
+const originalCornerPosition = new THREE.Vector3( 170, 55, -150 );
+
+function selectModel(model){
+    selectedModel = model;
+    moveModelToCenter(selectedModel);
+    modelList.forEach(model =>{
+        if (model != selectedModel){
+            moveModelToCorner(model, originalCornerPosition);
+        }
+    });
+}
+
+function moveModelToCenter(modelToAnimate){
+    TweenMax.to(modelToAnimate.position, 2, {x: 0, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 2, {y: 3, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 2, {z: 5, ease: Expo.easeOut});
+}
+
+function moveModelToCorner(modelToAnimate, position){
+    TweenMax.to(modelToAnimate.position, 4, {x: position.x, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {y: position.y, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {z: position.z, ease: Expo.easeOut});
+}
 
 
 init();
