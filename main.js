@@ -230,14 +230,16 @@ function onMouseClick(event){
 
 }
 
-const originalCornerPosition = new THREE.Vector3( 170, 55, -150 );
+const originalCornerPosition = new THREE.Vector3( 160, 55, -150 );
 
 function selectModel(model){
     selectedModel = model;
     moveModelToCenter(selectedModel);
+    let newPosition = originalCornerPosition.clone();
     modelList.forEach(model =>{
         if (model != selectedModel){
-            moveModelToCorner(model, originalCornerPosition);
+            moveModelToCorner(model, newPosition);
+            newPosition.x += 30;
         }
     });
 }
