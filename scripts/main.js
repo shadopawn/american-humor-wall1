@@ -233,6 +233,8 @@ function onMouseClick(event){
 const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
 
 function selectModel(model){
+    window.scrollTo(0, 0);
+
     selectedModel = model;
     moveModelToCenter(selectedModel);
     let newPosition = originalCornerPosition.clone();
