@@ -24,3 +24,21 @@ canvas {
     margin-top: 5000px;
     margin-bottom: 20px;
 }
+
+.orbit-text-container{
+    margin: 0;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    -ms-transform: translateY(-50%) translateX(50%);
+    transform: translateY(-50%) translateX(50%);
+    perspective: 1000px;
+}
+
+.orbit-text{
+    width: 550px;
+    text-align: center;
+    font-size: 36px;
+    transform: translateX(-400px) rotateY(-70deg);
+    opacity: 0;
+}

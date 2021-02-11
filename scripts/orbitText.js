@@ -1,0 +1,1 @@
+TweenMax.to(".orbit-text", 4, {x: 0, rotationY: 0, opacity: 3});
