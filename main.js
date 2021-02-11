@@ -20,9 +20,9 @@ function init() {
 }
 
 function setupCamera(){
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 30;
-    camera.position.y = 10;
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+    camera.position.z = 60;
+    camera.position.y = 20;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 }
 
@@ -230,7 +230,7 @@ function onMouseClick(event){
 
 }
 
-const originalCornerPosition = new THREE.Vector3( 160, 55, -150 );
+const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
 
 function selectModel(model){
     selectedModel = model;
@@ -245,9 +245,9 @@ function selectModel(model){
 }
 
 function moveModelToCenter(modelToAnimate){
-    TweenMax.to(modelToAnimate.position, 2, {x: 0, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 2, {y: 3, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 2, {z: 5, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {x: 0, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {y: 6, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {z: 10, ease: Expo.easeOut});
 }
 
 function moveModelToCorner(modelToAnimate, position){
