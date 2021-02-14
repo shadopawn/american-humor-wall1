@@ -40,7 +40,7 @@ function setupRenderer(){
 }
 
 function setupLighting(){
-    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 1)
+    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 1);
     scene.add(hemiLight);
 
     const directionalLight = new THREE.DirectionalLight(0xe2f3ff,2);
@@ -62,13 +62,13 @@ function setupLighting(){
 
 const loader = new THREE.GLTFLoader();
 let cameraModel, microphoneModel, televisionModel;
-let modelList = []
+let modelList = [];
 let selectedModel;
 
 function addCameraModel(){
     loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
-        cameraModel = gltf.scene
-        cameraModel.scale.set(0.07, 0.07, 0.07)
+        cameraModel = gltf.scene;
+        cameraModel.scale.set(0.07, 0.07, 0.07);
         model = gltf.scene.children[0];
         model.position.y = 75;
         applyMeshSettings(model);
@@ -82,8 +82,8 @@ function addCameraModel(){
 
 function addMicrophoneModel(){
     loader.load( 'assets/models/microphone/scene.gltf', function ( gltf ) {
-        microphoneModel = gltf.scene
-        microphoneModel.scale.set(10, 10, 10)
+        microphoneModel = gltf.scene;
+        microphoneModel.scale.set(10, 10, 10);
         microphoneModel.position.x = -22;
         microphoneModel.rotation.y = 0.785398
         model = gltf.scene.children[0]; 
@@ -98,8 +98,8 @@ function addMicrophoneModel(){
 
 function addTelevisionModel(){
     loader.load( 'assets/models/1980_tv/scene.gltf', function ( gltf ) {
-        televisionModel = gltf.scene
-        televisionModel.scale.set(10, 10, 10)
+        televisionModel = gltf.scene;
+        televisionModel.scale.set(10, 10, 10);
         televisionModel.position.x = 22;
         televisionModel.rotation.y = -0.2
         model = gltf.scene.children[0]; 
@@ -143,7 +143,7 @@ function animate() {
 let angularVelocity = 0;
 
 window.onscroll = function (e) {
-    angularVelocity = getScrollSpeed()/1000
+    angularVelocity = getScrollSpeed()/1000;
 
     moveModelToTheSide();
 }
@@ -206,7 +206,7 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 function onMouseClick(event){
-    event.preventDefault()
+    event.preventDefault();
 
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
@@ -218,7 +218,7 @@ function onMouseClick(event){
 	const intersects = raycaster.intersectObjects( scene.children, true );
 
 	for ( let i = 0; i < intersects.length; i ++ ) {
-        let intersectedObject = intersects[i].object
+        let intersectedObject = intersects[i].object;
 
         intersectedObject.traverseAncestors(parentObject => {
             if (modelList.includes(parentObject)){
@@ -237,11 +237,11 @@ function selectModel(model){
 
     selectedModel = model;
     moveModelToCenter(selectedModel);
-    let newPosition = originalCornerPosition.clone();
+    let newCornerPosition = originalCornerPosition.clone();
     modelList.forEach(model =>{
         if (model != selectedModel){
-            moveModelToCorner(model, newPosition);
-            newPosition.x += 30;
+            moveModelToCorner(model, newCornerPosition);
+            newCornerPosition.x += 30;
         }
     });
 }
