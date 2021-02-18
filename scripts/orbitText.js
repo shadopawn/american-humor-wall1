@@ -1,4 +1,4 @@
-let controller = new ScrollMagic.Controller();
+let orbitTextController = new ScrollMagic.Controller();
 
 let rotateTimeLine = new TimelineMax();
 rotateTimeLine.to(".orbit-text", 4, {x: 0, rotationY: 0, opacity: 3});
@@ -8,7 +8,7 @@ let rotateOrbitTextScene = new ScrollMagic.Scene({
     offset: 1200 // start this scene after scrolling for 50px
 })
     .setTween(rotateTimeLine)
-    .addTo(controller);
+    .addTo(orbitTextController);
 
 
 let fadeTimeLine = new TimelineMax();
@@ -19,4 +19,4 @@ let fadeOrbitTextScene = new ScrollMagic.Scene({
     offset: 3500 // start this scene after scrolling for 50px
 })
     .setTween(fadeTimeLine)
-    .addTo(controller);
+    .addTo(orbitTextController);

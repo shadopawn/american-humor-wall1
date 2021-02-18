@@ -145,16 +145,16 @@ let angularVelocity = 0;
 window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/1000;
 
-    moveModelToTheSide();
+    //moveModelToTheSide();
 }
 
-function moveModelToTheSide(){
+function addMoveModelToTheSideController(){
     let transitionStart = 4000;
     let transitionEnd = 4800;
     if(window.scrollY >= transitionStart && window.scrollY <= transitionEnd){
-        let mappedXPosition = mapRange(window.scrollY, transitionStart, transitionEnd, 0, 15);
+        let mappedXPosition = mapRange(window.scrollY, transitionStart, transitionEnd, 0, -15);
         if(selectedModel)
-            selectedModel.position.x = -mappedXPosition;
+            selectedModel.position.x = mappedXPosition;
     }
 }
 
@@ -232,6 +232,8 @@ function onMouseClick(event){
 
 const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
 
+
+
 function selectModel(model){
     window.scrollTo(0, 0);
 
@@ -241,9 +243,11 @@ function selectModel(model){
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToCorner(model, newCornerPosition);
-            newCornerPosition.x += 30;
+            newCornerPosition.x += 30; 
         }
     });
+
+    addMoveModelToTheSideController(selectedModel);
 }
 
 function moveModelToCenter(modelToAnimate){
@@ -258,6 +262,25 @@ function moveModelToCorner(modelToAnimate, position){
     TweenMax.to(modelToAnimate.position, 4, {z: position.z, ease: Expo.easeOut});
 }
 
+let moveToSideScene;
+
+function addMoveModelToTheSideController(selectedModel){
+    if(moveToSideScene)
+        moveToSideScene.destroy();
+
+    let moveToSideController = new ScrollMagic.Controller();
+
+    let moveToSideTimeLine = new TimelineMax();
+    moveToSideTimeLine.to(selectedModel.position, 1, {x: -15});
+
+    moveToSideScene = new ScrollMagic.Scene({
+        triggerElement: ".right-side",
+        duration: 800,
+        triggerHook: 0.9
+    })
+        .setTween(moveToSideTimeLine)
+        .addTo(moveToSideController);
+}
 
 init();
 animate();
