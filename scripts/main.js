@@ -148,7 +148,7 @@ window.onscroll = function (e) {
     //moveModelToTheSide();
 }
 
-function addMoveModelToTheSideController(){
+function moveModelToTheSide(){
     let transitionStart = 4000;
     let transitionEnd = 4800;
     if(window.scrollY >= transitionStart && window.scrollY <= transitionEnd){
@@ -231,8 +231,6 @@ function onMouseClick(event){
 }
 
 const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
-
-
 
 function selectModel(model){
     window.scrollTo(0, 0);

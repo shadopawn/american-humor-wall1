@@ -36,9 +36,17 @@ canvas {
 }
 
 .orbit-text{
-    width: 550px;
+    width: 675px;
     text-align: center;
-    font-size: 36px;
+    font-size: 32px;
     transform: translateX(-400px) rotateY(-70deg);
     opacity: 0;
+}
+
+.kennedy{
+    display: none;
+}
+
+.peabody{
+    display: inline;
 }
