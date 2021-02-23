@@ -5,7 +5,7 @@ function init() {
 
     setupCamera();
 
-    setupRenderer()
+    setupRenderer();
 
     document.body.appendChild(renderer.domElement);
     

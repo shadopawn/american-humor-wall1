@@ -6,12 +6,10 @@ function addAllOrbitAnimations(){
 
     let currentPosition = orbitTextSpacing;
     orbitTexts.forEach(orbitText => {
-        console.log('orbitText: ', orbitText);
         addOrbitAnimations(orbitText, currentPosition);
         currentPosition += (orbitTextSpacing + staticDistance);
     });
 
-    console.log(currentPosition);
     document.getElementById("right-side").style.marginTop = currentPosition + "px";
 }
 
