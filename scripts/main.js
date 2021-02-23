@@ -11,9 +11,9 @@ function init() {
     
     setupLighting();
 
-    addCameraModel();
-    addMicrophoneModel();
-    addTelevisionModel();
+    addKennedyAwardModel();
+    addPeabodyAwardModel();
+    addMarkTwainAwardModel();
 
     //scene.add( new THREE.AxesHelper(500));
     
@@ -61,52 +61,52 @@ function setupLighting(){
 }
 
 const loader = new THREE.GLTFLoader();
-let cameraModel, microphoneModel, televisionModel;
+let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let modelList = [];
 let selectedModel;
 
-function addCameraModel(){
+function addKennedyAwardModel(){
     loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
-        cameraModel = gltf.scene;
-        cameraModel.scale.set(0.07, 0.07, 0.07);
+        kennedyAwardModel = gltf.scene;
+        kennedyAwardModel.scale.set(0.07, 0.07, 0.07);
         model = gltf.scene.children[0];
         model.position.y = 75;
         applyMeshSettings(model);
-        scene.add(cameraModel);
+        scene.add(kennedyAwardModel);
 
-        modelList.push(cameraModel);
+        modelList.push(kennedyAwardModel);
     }, undefined, function (error) {
         console.error(error);
     } );
 }
 
-function addMicrophoneModel(){
+function addPeabodyAwardModel(){
     loader.load( 'assets/models/microphone/scene.gltf', function ( gltf ) {
-        microphoneModel = gltf.scene;
-        microphoneModel.scale.set(10, 10, 10);
-        microphoneModel.position.x = -22;
-        microphoneModel.rotation.y = 0.785398
+        peabodyAwardModel = gltf.scene;
+        peabodyAwardModel.scale.set(10, 10, 10);
+        peabodyAwardModel.position.x = -22;
+        peabodyAwardModel.rotation.y = 0.785398
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
-        scene.add(microphoneModel);
+        scene.add(peabodyAwardModel);
 
-        modelList.push(microphoneModel);
+        modelList.push(peabodyAwardModel);
     }, undefined, function (error) {
         console.error(error);
     } );
 }
 
-function addTelevisionModel(){
+function addMarkTwainAwardModel(){
     loader.load( 'assets/models/1980_tv/scene.gltf', function ( gltf ) {
-        televisionModel = gltf.scene;
-        televisionModel.scale.set(10, 10, 10);
-        televisionModel.position.x = 22;
-        televisionModel.rotation.y = -0.2
+        markTwainAwardModel = gltf.scene;
+        markTwainAwardModel.scale.set(10, 10, 10);
+        markTwainAwardModel.position.x = 22;
+        markTwainAwardModel.rotation.y = -0.2
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
-        scene.add(televisionModel);
+        scene.add(markTwainAwardModel);
 
-        modelList.push(televisionModel);
+        modelList.push(markTwainAwardModel);
     }, undefined, function (error) {
         console.error(error);
     } );
