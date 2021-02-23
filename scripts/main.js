@@ -236,11 +236,7 @@ async function selectModel(model){
     console.log("model selected");
     window.scrollTo(0, 0);
 
-    let contentContainer = document.getElementById('content-container');
-    await fetch('kennedyAward.html')
-        .then(data => data.text())
-        .then(html => contentContainer.innerHTML = html);
-    addAllOrbitAnimations();
+    await loadHtmlForModel(model);
 
     selectedModel = model;
     moveModelToCenter(selectedModel);
@@ -253,6 +249,29 @@ async function selectModel(model){
     });
 
     addMoveModelToTheSideController(selectedModel);
+}
+
+async function loadHtmlForModel(model){
+    if (model == kennedyAwardModel){
+        console.log("Kennedy award selected");
+        await loadHtmlFromFile("kennedyAward.html");
+    }
+    else if (model == peabodyAwardModel){
+        console.log("Peabody award selected");
+        await loadHtmlFromFile("peabodyAward.html");
+    }
+    else if (model == markTwainAwardModel){
+        console.log("Mark Twain award selected");
+        await loadHtmlFromFile("markTwainAward.html");
+    }
+}
+
+async function loadHtmlFromFile(fileName){
+    let contentContainer = document.getElementById('content-container');
+    await fetch(fileName)
+        .then(data => data.text())
+        .then(html => contentContainer.innerHTML = html);
+    addAllOrbitAnimations();
 }
 
 function moveModelToCenter(modelToAnimate){
