@@ -1,22 +1,43 @@
-let orbitTextController = new ScrollMagic.Controller();
+const orbitTextSpacing = 1500;
+const staticDistance = 2000;
 
-let rotateTimeLine = new TimelineMax();
-rotateTimeLine.to(".orbit-text", 4, {x: 0, rotationY: 0, opacity: 3});
+function addAllOrbitAnimations(){
+    const orbitTexts = document.querySelectorAll(".orbit-text");
 
-let rotateOrbitTextScene = new ScrollMagic.Scene({
-    duration: 700, // the scene should last for a scroll distance of 100px
-    offset: 1200 // start this scene after scrolling for 50px
-})
-    .setTween(rotateTimeLine)
-    .addTo(orbitTextController);
+    let currentPosition = orbitTextSpacing;
+    orbitTexts.forEach(orbitText => {
+        console.log('orbitText: ', orbitText);
+        addOrbitAnimations(orbitText, currentPosition);
+        currentPosition += (orbitTextSpacing + staticDistance);
+    });
+
+    console.log(currentPosition);
+    document.getElementById("right-side").style.marginTop = currentPosition + "px";
+}
+
+const orbitTextController = new ScrollMagic.Controller();
+
+function addOrbitAnimations(element, start){
+    let rotateTimeLine = new TimelineMax();
+    rotateTimeLine.to(element, 4, {x: 0, rotationY: 0, opacity: 3});
+
+    let rotateOrbitTextScene = new ScrollMagic.Scene({
+        duration: 700, 
+        offset: start
+    })
+        .setTween(rotateTimeLine)
+        .addTo(orbitTextController);
 
 
-let fadeTimeLine = new TimelineMax();
-fadeTimeLine.to(".orbit-text", 4, {opacity: 0});
+    let fadeTimeLine = new TimelineMax();
+    fadeTimeLine.to(element, 4, {opacity: 0});
 
-let fadeOrbitTextScene = new ScrollMagic.Scene({
-    duration: 700, // the scene should last for a scroll distance of 100px
-    offset: 3500 // start this scene after scrolling for 50px
-})
-    .setTween(fadeTimeLine)
-    .addTo(orbitTextController);
+    const fadeOut = start + staticDistance;
+
+    let fadeOrbitTextScene = new ScrollMagic.Scene({
+        duration: 700, 
+        offset: fadeOut
+    })
+        .setTween(fadeTimeLine)
+        .addTo(orbitTextController);
+}

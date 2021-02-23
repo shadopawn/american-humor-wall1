@@ -232,8 +232,15 @@ function onMouseClick(event){
 
 const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
 
-function selectModel(model){
+async function selectModel(model){
+    console.log("model selected");
     window.scrollTo(0, 0);
+
+    let contentContainer = document.getElementById('content-container');
+    await fetch('kennedyAward.html')
+        .then(data => data.text())
+        .then(html => contentContainer.innerHTML = html);
+    addAllOrbitAnimations();
 
     selectedModel = model;
     moveModelToCenter(selectedModel);
