@@ -114,11 +114,11 @@ function addMarkTwainAwardModel(){
 
 function applyMeshSettings(model){
     model.traverse(mesh => { 
-        if ( mesh.isMesh ) {
+        if (mesh.isMesh) {
             mesh.castShadow = true; 
             mesh.receiveShadow = true;
-            if(mesh.material.map) 
-                mesh.material.map.anisotropy = 16; 
+            if(mesh.material.map)
+                mesh.material.map.anisotropy = 16;
         }
     });
 }
