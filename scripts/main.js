@@ -230,23 +230,15 @@ function onMouseClick(event){
 
 }
 
-const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
-
 async function selectModel(model){
     console.log("model selected");
     window.scrollTo(0, 0);
 
-    await loadHtmlForModel(model);
-
     selectedModel = model;
-    moveModelToCenter(selectedModel);
-    let newCornerPosition = originalCornerPosition.clone();
-    modelList.forEach(model =>{
-        if (model != selectedModel){
-            moveModelToCorner(model, newCornerPosition);
-            newCornerPosition.x += 30; 
-        }
-    });
+
+    await loadHtmlForModel(selectedModel);
+
+    moveModelsToCorrectPositions(selectedModel);
 
     addMoveModelToTheSideController(selectedModel);
 }
@@ -272,6 +264,19 @@ async function loadHtmlFromFile(fileName){
         .then(data => data.text())
         .then(html => contentContainer.innerHTML = html);
     addAllOrbitAnimations();
+}
+
+const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
+
+function moveModelsToCorrectPositions(selectedModel){
+    moveModelToCenter(selectedModel);
+    let newCornerPosition = originalCornerPosition.clone();
+    modelList.forEach(model =>{
+        if (model != selectedModel){
+            moveModelToCorner(model, newCornerPosition);
+            newCornerPosition.x += 30; 
+        }
+    });
 }
 
 function moveModelToCenter(modelToAnimate){
