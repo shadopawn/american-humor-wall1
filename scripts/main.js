@@ -144,18 +144,6 @@ let angularVelocity = 0;
 
 window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/1000;
-
-    //moveModelToTheSide();
-}
-
-function moveModelToTheSide(){
-    let transitionStart = 4000;
-    let transitionEnd = 4800;
-    if(window.scrollY >= transitionStart && window.scrollY <= transitionEnd){
-        let mappedXPosition = mapRange(window.scrollY, transitionStart, transitionEnd, 0, -15);
-        if(selectedModel)
-            selectedModel.position.x = mappedXPosition;
-    }
 }
 
 function applyAngularVelocity(){
@@ -194,11 +182,6 @@ var getScrollSpeed = (function(settings){
       return delta;
     };
 })();
-
-
-const mapRange = (num, inMin, inMax, outMin, outMax) => {
-    return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-}
 
 window.addEventListener("click", onMouseClick);
 
