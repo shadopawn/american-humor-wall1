@@ -64,6 +64,7 @@ const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let modelList = [];
 let selectedModel;
+let originalPositions = [];
 
 function addKennedyAwardModel(){
     loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
@@ -75,6 +76,7 @@ function addKennedyAwardModel(){
         scene.add(kennedyAwardModel);
 
         modelList.push(kennedyAwardModel);
+        originalPositions.push(kennedyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     } );
@@ -91,6 +93,7 @@ function addPeabodyAwardModel(){
         scene.add(peabodyAwardModel);
 
         modelList.push(peabodyAwardModel);
+        originalPositions.push(peabodyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     } );
@@ -107,6 +110,7 @@ function addMarkTwainAwardModel(){
         scene.add(markTwainAwardModel);
 
         modelList.push(markTwainAwardModel);
+        originalPositions.push(markTwainAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     } );
@@ -144,6 +148,11 @@ let angularVelocity = 0;
 
 window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/1000;
+
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+      // you're at the bottom of the page
+      reachedBottom();
+    }
 }
 
 function applyAngularVelocity(){
@@ -183,6 +192,13 @@ var getScrollSpeed = (function(settings){
     };
 })();
 
+function reachedBottom(){
+    console.log("Bottom of page");
+    moveModelsToOriginalPositions();
+    clearContent();
+    selectedModel = null;
+}
+
 window.addEventListener("click", onMouseClick);
 
 const raycaster = new THREE.Raycaster();
@@ -221,7 +237,7 @@ async function selectModel(model){
 
     await loadHtmlForModel(selectedModel);
 
-    moveModelsToCorrectPositions(selectedModel);
+    moveModelsToSelectionPositions(selectedModel);
 
     addMoveModelToTheSideController(selectedModel);
 }
@@ -247,28 +263,46 @@ async function loadHtmlFromFile(fileName){
         .then(data => data.text())
         .then(html => contentContainer.innerHTML = html);
     addAllOrbitAnimations();
+    addBottomSpacer();
+}
+
+function addBottomSpacer(){
+    let bottomDiv = document.createElement('div');
+    bottomDiv.setAttribute("id", "bottom-spacer");
+    let rightSide = document.getElementById('right-side');
+    rightSide.appendChild(bottomDiv);
+}
+
+function clearContent(){
+    let contentContainer = document.getElementById('content-container');
+    contentContainer.innerHTML = "";
 }
 
 const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
 
-function moveModelsToCorrectPositions(selectedModel){
+function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
     let newCornerPosition = originalCornerPosition.clone();
     modelList.forEach(model =>{
         if (model != selectedModel){
-            moveModelToCorner(model, newCornerPosition);
+            moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += 30; 
         }
     });
 }
 
-function moveModelToCenter(modelToAnimate){
-    TweenMax.to(modelToAnimate.position, 4, {x: 0, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 4, {y: 6, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 4, {z: 10, ease: Expo.easeOut});
+function moveModelsToOriginalPositions(){
+    modelList.forEach((model, index) =>{
+        moveModelToPosition(model, originalPositions[index]);
+    });
 }
 
-function moveModelToCorner(modelToAnimate, position){
+function moveModelToCenter(modelToAnimate){
+    const centerPosition = new THREE.Vector3( 0, 6, 10 );
+    moveModelToPosition(modelToAnimate, centerPosition);
+}
+
+function moveModelToPosition(modelToAnimate, position){
     TweenMax.to(modelToAnimate.position, 4, {x: position.x, ease: Expo.easeOut});
     TweenMax.to(modelToAnimate.position, 4, {y: position.y, ease: Expo.easeOut});
     TweenMax.to(modelToAnimate.position, 4, {z: position.z, ease: Expo.easeOut});

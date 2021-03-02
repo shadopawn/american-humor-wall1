@@ -25,6 +25,10 @@ canvas {
     margin-bottom: 20px;
 }
 
+#bottom-spacer{
+    height: 100vh;
+}
+
 .orbit-text-container{
     margin: 0;
     position: fixed;
