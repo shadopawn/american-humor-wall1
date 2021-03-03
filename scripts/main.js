@@ -150,8 +150,8 @@ window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/1000;
 
     if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-      // you're at the bottom of the page
-      reachedBottom();
+        // you're at the bottom of the page
+        reachedBottom();
     }
 }
 
@@ -240,6 +240,8 @@ async function selectModel(model){
     moveModelsToSelectionPositions(selectedModel);
 
     addMoveModelToTheSideController(selectedModel);
+
+    //modelsToOriginalPositionOnScroll();
 }
 
 async function loadHtmlForModel(model){
@@ -326,6 +328,28 @@ function addMoveModelToTheSideController(selectedModel){
     })
         .setTween(moveToSideTimeLine)
         .addTo(moveToSideController);
+}
+
+let moveToOriginalPositionController;
+
+function modelsToOriginalPositionOnScroll(){
+
+    if (moveToOriginalPositionController)
+        moveToOriginalPositionController.destroy();
+
+    moveToOriginalPositionController = new ScrollMagic.Controller();
+
+    modelList.forEach((model, index) =>{
+        let moveToOriginalPositionScene = new ScrollMagic.Scene({
+            triggerElement: "#bottom-spacer",
+            duration: 900,
+            triggerHook: 1
+        })
+            .setTween(model.position, 1, {x: originalPositions[index].x})
+            .addTo(moveToOriginalPositionController);
+    });
+
+    
 }
 
 init();
