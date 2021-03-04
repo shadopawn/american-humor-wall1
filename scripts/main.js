@@ -15,7 +15,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    scene.add( new THREE.AxesHelper(500));
+    //scene.add( new THREE.AxesHelper(500));
     
 }
 
@@ -300,7 +300,7 @@ function addMoveModelToTheSideController(selectedModel){
     let moveToSideController = new ScrollMagic.Controller();
 
     let moveToSideTimeLine = new TimelineMax();
-    moveToSideTimeLine.to(selectedModel.position, 1, {x: -15});
+    moveToSideTimeLine.to(selectedModel.position, 1, {x: -17});
 
     moveToSideScene = new ScrollMagic.Scene({
         triggerElement: ".right-side",
