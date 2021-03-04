@@ -62,8 +62,8 @@ function setupLighting(){
 
 const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
-let modelList = [];
 let selectedModel;
+let modelList = [];
 let originalPositions = [];
 
 function addKennedyAwardModel(){
