@@ -15,7 +15,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
     
 }
 
@@ -269,7 +269,7 @@ function clearContent(){
     contentContainer.innerHTML = "";
 }
 
-const originalCornerPosition = new THREE.Vector3( 190, 25, -280 );
+const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
@@ -277,7 +277,7 @@ function moveModelsToSelectionPositions(selectedModel){
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
-            newCornerPosition.x += 30; 
+            newCornerPosition.x += 25; 
         }
     });
 }
