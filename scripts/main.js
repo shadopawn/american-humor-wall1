@@ -148,11 +148,6 @@ let angularVelocity = 0;
 
 window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/1000;
-
-    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-        // you're at the bottom of the page
-        //reachedBottom();
-    }
 }
 
 function applyAngularVelocity(){
@@ -191,13 +186,6 @@ var getScrollSpeed = (function(settings){
       return delta;
     };
 })();
-
-function reachedBottom(){
-    console.log("Bottom of page");
-    moveModelsToOriginalPositions();
-    clearContent();
-    selectedModel = null;
-}
 
 window.addEventListener("click", onMouseClick);
 
@@ -291,12 +279,6 @@ function moveModelsToSelectionPositions(selectedModel){
             moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += 30; 
         }
-    });
-}
-
-function moveModelsToOriginalPositions(){
-    modelList.forEach((model, index) =>{
-        moveModelToPosition(model, originalPositions[index]);
     });
 }
 
