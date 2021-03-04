@@ -151,7 +151,7 @@ window.onscroll = function (e) {
 
     if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
         // you're at the bottom of the page
-        reachedBottom();
+        //reachedBottom();
     }
 }
 
@@ -231,8 +231,7 @@ function onMouseClick(event){
 
 async function selectModel(model){
     console.log("model selected");
-    window.scrollTo(0, 0);
-
+    
     selectedModel = model;
 
     await loadHtmlForModel(selectedModel);
@@ -241,7 +240,9 @@ async function selectModel(model){
 
     addMoveModelToTheSideController(selectedModel);
 
-    //modelsToOriginalPositionOnScroll();
+    modelsToOriginalPositionOnScroll();
+
+    window.scrollTo(0, 0);
 }
 
 async function loadHtmlForModel(model){
@@ -305,9 +306,7 @@ function moveModelToCenter(modelToAnimate){
 }
 
 function moveModelToPosition(modelToAnimate, position){
-    TweenMax.to(modelToAnimate.position, 4, {x: position.x, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 4, {y: position.y, ease: Expo.easeOut});
-    TweenMax.to(modelToAnimate.position, 4, {z: position.z, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Expo.easeOut});
 }
 
 let moveToSideScene;
@@ -339,17 +338,19 @@ function modelsToOriginalPositionOnScroll(){
 
     moveToOriginalPositionController = new ScrollMagic.Controller();
 
+    let scrollDuration = 1.5*window.innerHeight;
+
     modelList.forEach((model, index) =>{
-        let moveToOriginalPositionScene = new ScrollMagic.Scene({
+        let originalPosition = originalPositions[index];
+
+        new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
-            duration: 900,
-            triggerHook: 1
+            duration: scrollDuration,
+            triggerHook: 0.1
         })
-            .setTween(model.position, 1, {x: originalPositions[index].x})
+            .setTween(model.position, 1, {x: originalPosition.x, y: originalPosition.y, z: originalPosition.z})
             .addTo(moveToOriginalPositionController);
     });
-
-    
 }
 
 init();
