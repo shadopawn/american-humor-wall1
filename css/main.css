@@ -48,7 +48,7 @@ canvas {
 }
 
 .quote{
-    font-weight: normal;
+    font-weight: normal;  
     margin-bottom: 2px;
 }
 
@@ -57,5 +57,30 @@ canvas {
     text-align: right;
     font-weight: normal;
     margin-top: 0px;
+    margin-bottom: 25px;
     width: 90%;
+}
+
+.side-by-side{
+    display: flex;
+}
+
+.side-by-side > *{
+    flex: 1;
+}
+
+.image-and-caption{
+    margin: 10px 20px;
+}
+
+.image-and-caption img{ 
+    width: 100%;
+    object-fit: contain;
+}
+
+.image-and-caption p{
+    background-color: rgba(0, 9, 32, 0.445);
+    padding: 5px 20px 20px;
+    margin: 0px;
+    font-size: 12px;
 }
