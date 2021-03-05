@@ -11,6 +11,10 @@ body {
     font-size: 22px;
 }
 
+p{
+    margin: 40px 0px;
+}
+
 canvas {
     display: block;
     position: fixed;
@@ -57,16 +61,18 @@ canvas {
     text-align: right;
     font-weight: normal;
     margin-top: 0px;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     width: 90%;
 }
 
 .side-by-side{
     display: flex;
+    margin-bottom: 25px;
 }
 
 .side-by-side > *{
     flex: 1;
+    margin-top: 0;
 }
 
 .image-and-caption{
