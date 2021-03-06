@@ -7,7 +7,7 @@ body {
     background-size: cover;
 
     color: white;
-    font-family: Verdana;
+    font-family: 'Montserrat', sans-serif;
     font-size: 22px;
 }
 
@@ -24,7 +24,7 @@ canvas {
 .right-side{
     width: 40%;
     float: right;
-    padding-right: 220px;
+    padding-right: 11%;
     margin-top: 5000px;
     margin-bottom: 20px;
 }
@@ -85,8 +85,9 @@ canvas {
 }
 
 .image-and-caption p{
-    background-color: rgba(0, 9, 32, 0.445);
-    padding: 5px 20px 20px;
+    background-color: #080a1ccc ;
+    padding: 7px 20px 20px;
     margin: 0px;
+    margin-top: -5px;
     font-size: 12px;
 }
