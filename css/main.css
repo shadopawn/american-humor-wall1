@@ -75,6 +75,11 @@ canvas {
     margin-top: 0;
 }
 
+.center-vertically{
+    display: flex;
+    align-items: center;
+}
+
 .image-and-caption{
     margin: 10px 20px;
 }
@@ -90,4 +95,11 @@ canvas {
     margin: 0px;
     margin-top: -5px;
     font-size: 12px;
+}
+
+.audio-icon{
+    position: relative;
+    top: 170px;
+    left: -70px;
+    width: 35px;
 }
