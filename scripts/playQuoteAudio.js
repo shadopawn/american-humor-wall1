@@ -1,6 +1,6 @@
 let audio = new Audio();
 function playQuoteAudio(fileName) {
-    let url = "https://raw.shadopawn.github.io/assets/audio/"+fileName
+    let url = "https://shadopawn.github.io/assets/audio/"+fileName +"?raw=true"
     audio.pause();
     audio.src = url;
     audio.play();
