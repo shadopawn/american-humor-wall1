@@ -253,8 +253,13 @@ async function loadHtmlFromFile(fileName){
     await fetch(fileName)
         .then(data => data.text())
         .then(html => contentContainer.innerHTML = html);
+    onHtmlLoaded();
+}
+
+function onHtmlLoaded(){
     addAllOrbitAnimations();
     addBottomSpacer();
+    setupCarousel();
 }
 
 function addBottomSpacer(){

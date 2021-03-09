@@ -1,0 +1,44 @@
+.carousel-cell {
+    width: 100%;
+    margin-right: 40px;
+}
+
+.carousel-cell .side-by-side {
+    margin-bottom: 0px;
+}
+
+.carousel-cell img{
+    margin-right: 30px;
+    width: 50%;
+    object-fit: contain;
+}
+
+.carousel-text-title{
+    margin: 0px;
+}
+
+.carousel-text p{
+    margin: 0px;
+    font-size: 20px;
+}
+
+
+.flickity-button {
+    background: transparent;
+}
+
+.flickity-button:hover {
+    background: transparent;
+}
+
+.flickity-button-icon {
+    fill: white;
+}
+
+.flickity-prev-next-button.next {
+    right: -70px;
+}
+
+.flickity-prev-next-button.previous {
+    left: -70px;
+}
