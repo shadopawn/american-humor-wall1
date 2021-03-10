@@ -8,11 +8,12 @@ body {
 
     color: white;
     font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 p{
     margin: 40px 0px;
+    line-height: 1.6;
 }
 
 canvas {
@@ -99,7 +100,7 @@ canvas {
 
 .audio-icon{
     position: relative;
-    top: 170px;
+    top: 120px;
     left: -70px;
     width: 35px;
 }
