@@ -13,7 +13,7 @@
     object-fit: contain;
 }
 
-.carousel-text-title{
+.carousel-name{
     margin: 0px;
 }
 
@@ -41,4 +41,26 @@
 
 .flickity-prev-next-button.previous {
     left: -70px;
+}
+
+.next-carousel-name{
+    color: white;
+    position: absolute;
+    margin: 0px;
+    text-align: center;
+    transform: rotate(90deg);
+    width: 150px;
+    left: -75px;
+    top: 10px;
+}
+
+.previous-carousel-name{
+    color: white;
+    position: absolute;
+    margin: 0px;
+    text-align: center;
+    transform: rotate(-90deg);
+    width: 150px;
+    right: -75px;
+    top: 10px;
 }
