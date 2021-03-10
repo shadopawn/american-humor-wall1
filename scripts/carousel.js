@@ -10,7 +10,8 @@ function setupCarousel(){
 
     flickity = new Flickity( carousel, {
         wrapAround : true,
-        pageDots: false
+        pageDots: false,
+        imagesLoaded: true
     });
 
     let nextButton = document.querySelector(".flickity-prev-next-button.next");

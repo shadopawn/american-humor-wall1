@@ -107,3 +107,12 @@ canvas {
 .video-quote{
     padding-left: 30px;
 }
+
+.footnotes{
+    margin-top: 70px;
+    font-size: 12px;
+}
+
+.footnotes p{
+    margin: 0px;
+}
