@@ -17,14 +17,12 @@ function setupCarousel(){
     let nextButton = document.querySelector(".flickity-prev-next-button.next");
 
     let nextName = document.createElement("P");
-    nextName.innerText = "Test Name";
     nextName.className = "next-carousel-name";
     nextButton.appendChild(nextName);
 
     let previousButton = document.querySelector(".flickity-prev-next-button.previous");
 
     let previousName = document.createElement("P");
-    previousName.innerText = "Test Name";
     previousName.className = "previous-carousel-name";
     previousButton.appendChild(previousName);
 

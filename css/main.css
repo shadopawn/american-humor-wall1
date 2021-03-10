@@ -46,7 +46,7 @@ canvas {
 .orbit-text{
     width: 675px;
     text-align: center;
-    font-size: 32px;
+    font-size: 1.4em;
     transform: translateX(-400px) rotateY(-70deg);
     opacity: 0;
 }
@@ -57,7 +57,7 @@ canvas {
 }
 
 .quote-attribution{
-    font-size: 15px;
+    font-size: 0.7em;
     text-align: right;
     font-weight: normal;
     margin-top: 0px;
@@ -94,7 +94,7 @@ canvas {
     padding: 7px 20px 20px;
     margin: 0px;
     margin-top: -5px;
-    font-size: 12px;
+    font-size: 0.6em;
 }
 
 .audio-icon{
@@ -110,7 +110,7 @@ canvas {
 
 .footnotes{
     margin-top: 70px;
-    font-size: 12px;
+    font-size: 0.6em;
 }
 
 .footnotes p{
