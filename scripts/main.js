@@ -269,11 +269,6 @@ function addBottomSpacer(){
     rightSide.appendChild(bottomDiv);
 }
 
-function clearContent(){
-    let contentContainer = document.getElementById('content-container');
-    contentContainer.innerHTML = "";
-}
-
 const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToSelectionPositions(selectedModel){
