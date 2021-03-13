@@ -203,17 +203,22 @@ function onMouseClick(event){
 
 	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects( scene.children, true );
-
+    
+    let intersectedModel;
 	for ( let i = 0; i < intersects.length; i ++ ) {
         let intersectedObject = intersects[i].object;
 
         intersectedObject.traverseAncestors(parentObject => {
             if (modelList.includes(parentObject)){
-                selectModel(parentObject);
+                intersectedModel = parentObject;
             }
         });
 
 	}
+
+    if(intersectedModel){
+        selectModel(intersectedModel);
+    }
 
 }
 
