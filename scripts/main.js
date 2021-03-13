@@ -203,17 +203,22 @@ function onMouseClick(event){
 
 	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects( scene.children, true );
-
+    
+    let intersectedModel;
 	for ( let i = 0; i < intersects.length; i ++ ) {
         let intersectedObject = intersects[i].object;
 
         intersectedObject.traverseAncestors(parentObject => {
             if (modelList.includes(parentObject)){
-                selectModel(parentObject);
+                intersectedModel = parentObject;
             }
         });
 
 	}
+
+    if(intersectedModel){
+        selectModel(intersectedModel);
+    }
 
 }
 
@@ -267,11 +272,6 @@ function addBottomSpacer(){
     bottomDiv.setAttribute("id", "bottom-spacer");
     let rightSide = document.getElementById('right-side');
     rightSide.appendChild(bottomDiv);
-}
-
-function clearContent(){
-    let contentContainer = document.getElementById('content-container');
-    contentContainer.innerHTML = "";
 }
 
 const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
