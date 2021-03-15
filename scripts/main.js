@@ -293,7 +293,7 @@ function moveModelToCenter(modelToAnimate){
 }
 
 function moveModelToPosition(modelToAnimate, position){
-    TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Power2.easeInOut});
 }
 
 let moveToSideScene;
