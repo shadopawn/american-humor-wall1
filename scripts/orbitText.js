@@ -28,7 +28,7 @@ function addOrbitAnimations(element, start){
 
 
     let fadeTimeLine = new TimelineMax();
-    fadeTimeLine.to(element, 4, {opacity: 0});
+    fadeTimeLine.to(element, 4, {x: 400, rotationY: 70, opacity: 0});
 
     const fadeOut = start + staticDistance;
 
