@@ -66,7 +66,11 @@ canvas {
     font-weight: normal;
     margin-top: 0px;
     margin-bottom: 35px;
-    width: 90%;
+    width: 100%;
+}
+
+.heading{
+    font-size: 3em;
 }
 
 .side-by-side{
@@ -95,10 +99,10 @@ canvas {
 
 .image-and-caption p{
     background-color: #080a1ccc ;
-    padding: 7px 20px 20px;
+    padding: 20px 20px 20px;
     margin: 0px;
     margin-top: -5px;
-    font-size: 0.6em;
+    font-size: 0.75em;
 }
 
 .audio-icon{
@@ -106,6 +110,12 @@ canvas {
     top: 120px;
     left: -70px;
     width: 35px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.audio-icon:hover{
+    width: 40px;
 }
 
 .video-quote{

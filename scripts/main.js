@@ -147,7 +147,7 @@ function animate() {
 let angularVelocity = 0;
 
 window.onscroll = function (e) {
-    angularVelocity = getScrollSpeed()/1000;
+    angularVelocity = getScrollSpeed()/2000;
 }
 
 function applyAngularVelocity(){
@@ -223,6 +223,10 @@ function onMouseClick(event){
 }
 
 async function selectModel(model){
+    if (model == selectedModel){
+        return;
+    }
+
     console.log("model selected");
     
     selectedModel = model;
@@ -305,7 +309,7 @@ function addMoveModelToTheSideController(selectedModel){
     let moveToSideController = new ScrollMagic.Controller();
 
     let moveToSideTimeLine = new TimelineMax();
-    moveToSideTimeLine.to(selectedModel.position, 1, {x: -17});
+    moveToSideTimeLine.to(selectedModel.position, 1, {x: -20});
 
     moveToSideScene = new ScrollMagic.Scene({
         triggerElement: ".right-side",
