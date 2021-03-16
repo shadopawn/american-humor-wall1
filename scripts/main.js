@@ -15,7 +15,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
     
 }
 
@@ -286,7 +286,7 @@ function moveModelsToSelectionPositions(selectedModel){
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
-            newCornerPosition.x += 25; 
+            newCornerPosition.x += 25;
         }
     });
 }

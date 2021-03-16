@@ -11,10 +11,12 @@ body {
     font-size: 18px;
 
     overscroll-behavior: none;
+
+    --bottom-margin: 50px;
 }
 
 p{
-    margin: 40px 0px;
+    margin: 0px 0px var(--bottom-margin) 0px;
     line-height: 1.6;
 }
 
@@ -57,6 +59,7 @@ canvas {
 
 .quote{
     font-family: 'Source Serif Pro', serif;
+    margin-top: 0px;
     margin-bottom: 2px;
 }
 
@@ -65,7 +68,7 @@ canvas {
     text-align: right;
     font-weight: normal;
     margin-top: 0px;
-    margin-bottom: 35px;
+    margin-bottom: var(--bottom-margin);
     width: 100%;
 }
 
@@ -75,7 +78,6 @@ canvas {
 
 .side-by-side{
     display: flex;
-    margin-bottom: 25px;
 }
 
 .side-by-side > *{
@@ -89,7 +91,7 @@ canvas {
 }
 
 .image-and-caption{
-    margin: 10px 20px;
+    margin: 0px 10px var(--bottom-margin);
 }
 
 .image-and-caption img{ 
@@ -106,9 +108,8 @@ canvas {
 }
 
 .audio-icon{
-    position: relative;
-    top: 120px;
-    left: -70px;
+    position: absolute;
+    transform: translateX(-60px) translateY(68px);
     width: 35px;
     cursor: pointer;
     transition: .5s;
@@ -120,6 +121,10 @@ canvas {
 
 .video-quote{
     padding-left: 30px;
+}
+
+video{
+    margin-bottom: var(--bottom-margin);
 }
 
 .footnotes{
