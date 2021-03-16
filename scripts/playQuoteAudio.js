@@ -1,5 +1,5 @@
 let audio = new Audio();
-function playQuoteAudio(fileName) {
+function playPauseQuoteAudio(fileName) {
     let url = "./assets/audio/" + fileName + "?raw=true";
 
     if(audio.src.includes(fileName)){
