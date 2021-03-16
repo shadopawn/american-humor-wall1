@@ -278,12 +278,13 @@ function addBottomSpacer(){
     rightSide.appendChild(bottomDiv);
 }
 
-const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
     moveModelsToCorner(selectedModel);
 }
+
+const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = originalCornerPosition.clone();
