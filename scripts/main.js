@@ -282,6 +282,10 @@ const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
+    moveModelsToCorner(selectedModel);
+}
+
+function moveModelsToCorner(selectedModel){
     let newCornerPosition = originalCornerPosition.clone();
     modelList.forEach(model =>{
         if (model != selectedModel){
