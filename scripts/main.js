@@ -67,11 +67,11 @@ let modelList = [];
 let originalPositions = [];
 
 function addKennedyAwardModel(){
-    loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/kennedy_award/scene.gltf', function ( gltf ) {
         kennedyAwardModel = gltf.scene;
-        kennedyAwardModel.scale.set(0.07, 0.07, 0.07);
+        kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         model = gltf.scene.children[0];
-        model.position.y = 75;
+        model.position.z = 50;
         applyMeshSettings(model);
         scene.add(kennedyAwardModel);
 
@@ -83,11 +83,10 @@ function addKennedyAwardModel(){
 }
 
 function addPeabodyAwardModel(){
-    loader.load( 'assets/models/microphone/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
         peabodyAwardModel = gltf.scene;
-        peabodyAwardModel.scale.set(10, 10, 10);
+        peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
         peabodyAwardModel.position.x = -22;
-        peabodyAwardModel.rotation.y = 0.785398
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
         scene.add(peabodyAwardModel);
@@ -100,11 +99,10 @@ function addPeabodyAwardModel(){
 }
 
 function addMarkTwainAwardModel(){
-    loader.load( 'assets/models/1980_tv/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
         markTwainAwardModel = gltf.scene;
-        markTwainAwardModel.scale.set(10, 10, 10);
+        markTwainAwardModel.scale.set(2.2, 2.2, 2.2);
         markTwainAwardModel.position.x = 22;
-        markTwainAwardModel.rotation.y = -0.2
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
         scene.add(markTwainAwardModel);
