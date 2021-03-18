@@ -130,6 +130,8 @@ window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
+
+    updateCornerPosition();
 });
 
 function animate() {
@@ -282,16 +284,35 @@ function moveModelsToSelectionPositions(selectedModel){
     moveModelsToCorner(selectedModel);
 }
 
-const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
-
 function moveModelsToCorner(selectedModel){
-    let newCornerPosition = originalCornerPosition.clone();
+    let newCornerPosition = getCornerVector();
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += 25;
         }
     });
+}
+
+function updateCornerPosition(){
+    let newCornerPosition = getCornerVector();
+    modelList.forEach(model =>{
+        if (model != selectedModel){
+            model.position.copy(newCornerPosition);
+            newCornerPosition.x += 25;
+        }
+    });
+}
+
+function getCornerVector(){
+    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
+    let corner2D = new THREE.Vector2();
+    let cornerPoint = new THREE.Vector3();
+
+    corner2D.set(0.825, 0.85); // NDC (Normalized Device Coordinate) of the corner position
+    raycaster.setFromCamera(corner2D, camera);
+    raycaster.ray.intersectPlane(plane, cornerPoint);
+    return cornerPoint;
 }
 
 function moveModelToCenter(modelToAnimate){
