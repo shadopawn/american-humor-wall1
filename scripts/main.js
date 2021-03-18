@@ -67,7 +67,7 @@ let modelList = [];
 let originalPositions = [];
 
 function addKennedyAwardModel(){
-    loader.load( 'assets/models/kennedy_award/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/kennedyAward/scene.gltf', function ( gltf ) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         kennedyAwardModel.position.x = -22;
@@ -84,7 +84,7 @@ function addKennedyAwardModel(){
 }
 
 function addPeabodyAwardModel(){
-    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabodyAward/scene.gltf', function ( gltf ) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
         model = gltf.scene.children[0]; 
@@ -99,7 +99,7 @@ function addPeabodyAwardModel(){
 }
 
 function addMarkTwainAwardModel(){
-    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabodyAward/scene.gltf', function ( gltf ) {
         markTwainAwardModel = gltf.scene;
         markTwainAwardModel.scale.set(2.2, 2.2, 2.2);
         markTwainAwardModel.position.x = 22;
