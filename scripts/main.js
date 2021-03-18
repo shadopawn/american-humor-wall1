@@ -306,10 +306,9 @@ function updateCornerPosition(){
 
 function getCornerVector(){
     let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
-    let corner2D = new THREE.Vector2();
+    let corner2D = new THREE.Vector2(0.825, 0.85); // NDC (Normalized Device Coordinate) of the corner position
     let cornerPoint = new THREE.Vector3();
 
-    corner2D.set(0.825, 0.85); // NDC (Normalized Device Coordinate) of the corner position
     raycaster.setFromCamera(corner2D, camera);
     raycaster.ray.intersectPlane(plane, cornerPoint);
     return cornerPoint;
