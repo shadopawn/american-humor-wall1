@@ -295,6 +295,10 @@ function moveModelsToCorner(selectedModel){
 }
 
 function updateCornerPosition(){
+    if (selectedModel == null){
+        return;
+    }
+    
     let newCornerPosition = getCornerVector();
     modelList.forEach(model =>{
         if (model != selectedModel){
