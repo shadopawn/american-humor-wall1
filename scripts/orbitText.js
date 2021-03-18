@@ -1,10 +1,11 @@
+const firstOrbitTextOffset = 800;
 const orbitTextSpacing = 1500;
 const staticDistance = 2000;
 
 function addAllOrbitAnimations(){
     const orbitTexts = document.querySelectorAll(".orbit-text");
 
-    let currentPosition = orbitTextSpacing;
+    let currentPosition = firstOrbitTextOffset;
     orbitTexts.forEach(orbitText => {
         addOrbitAnimations(orbitText, currentPosition);
         currentPosition += (orbitTextSpacing + staticDistance);

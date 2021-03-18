@@ -11,25 +11,29 @@ body {
     font-size: 18px;
 
     overscroll-behavior: none;
+
+    --bottom-margin: 50px;
 }
 
 p{
-    margin: 40px 0px;
+    margin: 0px 0px var(--bottom-margin) 0px;
     line-height: 1.6;
 }
 
 canvas {
-    display: block;
     position: fixed;
+    top: 0px;
+    left: 0px;
     z-index: -10;
 }
 
 .right-side{
     width: 40%;
     float: right;
-    padding-right: 11%;
+    padding-right: 12%;
     margin-top: 5000px;
     margin-bottom: 20px;
+    max-width: 1600px;
 }
 
 #bottom-spacer{
@@ -56,6 +60,7 @@ canvas {
 
 .quote{
     font-family: 'Source Serif Pro', serif;
+    margin-top: 0px;
     margin-bottom: 2px;
 }
 
@@ -64,13 +69,16 @@ canvas {
     text-align: right;
     font-weight: normal;
     margin-top: 0px;
-    margin-bottom: 35px;
-    width: 90%;
+    margin-bottom: var(--bottom-margin);
+    width: 100%;
+}
+
+.heading{
+    font-size: 3em;
 }
 
 .side-by-side{
     display: flex;
-    margin-bottom: 25px;
 }
 
 .side-by-side > *{
@@ -84,7 +92,7 @@ canvas {
 }
 
 .image-and-caption{
-    margin: 10px 20px;
+    margin: 0px 10px var(--bottom-margin);
 }
 
 .image-and-caption img{ 
@@ -94,21 +102,30 @@ canvas {
 
 .image-and-caption p{
     background-color: #080a1ccc ;
-    padding: 7px 20px 20px;
+    padding: 20px 20px 20px;
     margin: 0px;
     margin-top: -5px;
-    font-size: 0.6em;
+    font-size: 0.75em;
 }
 
 .audio-icon{
-    position: relative;
-    top: 120px;
-    left: -70px;
+    position: absolute;
+    transform: translateX(-60px) translateY(68px);
     width: 35px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.audio-icon:hover{
+    width: 40px;
 }
 
 .video-quote{
     padding-left: 30px;
+}
+
+video{
+    margin-bottom: var(--bottom-margin);
 }
 
 .footnotes{

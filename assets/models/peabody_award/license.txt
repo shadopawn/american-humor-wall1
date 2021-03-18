@@ -1,0 +1,11 @@
+Model Information:
+* title:	David Letterman Peabody Award
+* source:	https://sketchfab.com/3d-models/david-letterman-peabody-award-4f51cfc789b2460ab7a4aec60029092d
+* author:	brruble (https://sketchfab.com/brruble)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "David Letterman Peabody Award" (https://sketchfab.com/3d-models/david-letterman-peabody-award-4f51cfc789b2460ab7a4aec60029092d) by brruble (https://sketchfab.com/brruble) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

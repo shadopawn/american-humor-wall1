@@ -1,0 +1,11 @@
+Model Information:
+* title:	Kennedy Award CV
+* source:	https://sketchfab.com/3d-models/kennedy-award-cv-406be758ae6042fa920ff01047c783e3
+* author:	brruble (https://sketchfab.com/brruble)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Kennedy Award CV" (https://sketchfab.com/3d-models/kennedy-award-cv-406be758ae6042fa920ff01047c783e3) by brruble (https://sketchfab.com/brruble) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

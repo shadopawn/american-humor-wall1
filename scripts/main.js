@@ -67,11 +67,12 @@ let modelList = [];
 let originalPositions = [];
 
 function addKennedyAwardModel(){
-    loader.load( 'assets/models/vintage_camera/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/kennedy_award/scene.gltf', function ( gltf ) {
         kennedyAwardModel = gltf.scene;
-        kennedyAwardModel.scale.set(0.07, 0.07, 0.07);
+        kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
+        kennedyAwardModel.position.x = -22;
         model = gltf.scene.children[0];
-        model.position.y = 75;
+        model.position.z = 50;
         applyMeshSettings(model);
         scene.add(kennedyAwardModel);
 
@@ -83,11 +84,9 @@ function addKennedyAwardModel(){
 }
 
 function addPeabodyAwardModel(){
-    loader.load( 'assets/models/microphone/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
         peabodyAwardModel = gltf.scene;
-        peabodyAwardModel.scale.set(10, 10, 10);
-        peabodyAwardModel.position.x = -22;
-        peabodyAwardModel.rotation.y = 0.785398
+        peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
         scene.add(peabodyAwardModel);
@@ -100,11 +99,10 @@ function addPeabodyAwardModel(){
 }
 
 function addMarkTwainAwardModel(){
-    loader.load( 'assets/models/1980_tv/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
         markTwainAwardModel = gltf.scene;
-        markTwainAwardModel.scale.set(10, 10, 10);
+        markTwainAwardModel.scale.set(2.2, 2.2, 2.2);
         markTwainAwardModel.position.x = 22;
-        markTwainAwardModel.rotation.y = -0.2
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
         scene.add(markTwainAwardModel);
@@ -132,6 +130,8 @@ window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
+
+    updateCornerPosition();
 });
 
 function animate() {
@@ -147,7 +147,7 @@ function animate() {
 let angularVelocity = 0;
 
 window.onscroll = function (e) {
-    angularVelocity = getScrollSpeed()/1000;
+    angularVelocity = getScrollSpeed()/2000;
 }
 
 function applyAngularVelocity(){
@@ -223,6 +223,10 @@ function onMouseClick(event){
 }
 
 async function selectModel(model){
+    if (model == selectedModel){
+        return;
+    }
+
     console.log("model selected");
     
     selectedModel = model;
@@ -274,17 +278,40 @@ function addBottomSpacer(){
     rightSide.appendChild(bottomDiv);
 }
 
-const originalCornerPosition = new THREE.Vector3( 270, 25, -380 );
 
 function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
-    let newCornerPosition = originalCornerPosition.clone();
+    moveModelsToCorner(selectedModel);
+}
+
+function moveModelsToCorner(selectedModel){
+    let newCornerPosition = getCornerVector();
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
-            newCornerPosition.x += 25; 
+            newCornerPosition.x += 25;
         }
     });
+}
+
+function updateCornerPosition(){
+    let newCornerPosition = getCornerVector();
+    modelList.forEach(model =>{
+        if (model != selectedModel){
+            model.position.copy(newCornerPosition);
+            newCornerPosition.x += 25;
+        }
+    });
+}
+
+function getCornerVector(){
+    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
+    let corner2D = new THREE.Vector2(0.825, 0.85); // NDC (Normalized Device Coordinate) of the corner position
+    let cornerPoint = new THREE.Vector3();
+
+    raycaster.setFromCamera(corner2D, camera);
+    raycaster.ray.intersectPlane(plane, cornerPoint);
+    return cornerPoint;
 }
 
 function moveModelToCenter(modelToAnimate){
@@ -293,7 +320,7 @@ function moveModelToCenter(modelToAnimate){
 }
 
 function moveModelToPosition(modelToAnimate, position){
-    TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Expo.easeOut});
+    TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Power2.easeInOut});
 }
 
 let moveToSideScene;
@@ -305,7 +332,7 @@ function addMoveModelToTheSideController(selectedModel){
     let moveToSideController = new ScrollMagic.Controller();
 
     let moveToSideTimeLine = new TimelineMax();
-    moveToSideTimeLine.to(selectedModel.position, 1, {x: -17});
+    moveToSideTimeLine.to(selectedModel.position, 1, {x: -20});
 
     moveToSideScene = new ScrollMagic.Scene({
         triggerElement: ".right-side",
