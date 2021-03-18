@@ -15,7 +15,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    scene.add( new THREE.AxesHelper(500));
+    //scene.add( new THREE.AxesHelper(500));
     
 }
 
