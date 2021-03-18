@@ -70,6 +70,7 @@ function addKennedyAwardModel(){
     loader.load( 'assets/models/kennedy_award/scene.gltf', function ( gltf ) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
+        kennedyAwardModel.position.x = -22;
         model = gltf.scene.children[0];
         model.position.z = 50;
         applyMeshSettings(model);
@@ -86,7 +87,6 @@ function addPeabodyAwardModel(){
     loader.load( 'assets/models/peabody_award/scene.gltf', function ( gltf ) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
-        peabodyAwardModel.position.x = -22;
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
         scene.add(peabodyAwardModel);
