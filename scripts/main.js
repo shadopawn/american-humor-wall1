@@ -43,16 +43,16 @@ function setupLighting(){
     const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 1);
     scene.add(hemiLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xe2f3ff,2);
-    directionalLight.position.set(-50,50,30);
+    const directionalLight = new THREE.DirectionalLight(0xe2f3ff, 2);
+    directionalLight.position.set(-50, 50, 30);
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = -0.0001;
     directionalLight.shadow.mapSize.width = 1024*4;
     directionalLight.shadow.mapSize.height = 1024*4;
     scene.add(directionalLight);
 
-    const spotLight = new THREE.SpotLight(0xffffff,1);
-    spotLight.position.set(80,15,30);
+    const spotLight = new THREE.SpotLight(0xffffff, 1);
+    spotLight.position.set(80, 15, 30);
     spotLight.castShadow = true;
     spotLight.shadow.bias = -0.0001;
     spotLight.shadow.mapSize.width = 1024*4;
@@ -67,7 +67,7 @@ let modelList = [];
 let originalPositions = [];
 
 function addKennedyAwardModel(){
-    loader.load( 'assets/models/kennedyAward/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/kennedyAward/scene.gltf', function (gltf) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         kennedyAwardModel.position.x = -22;
@@ -84,7 +84,7 @@ function addKennedyAwardModel(){
 }
 
 function addPeabodyAwardModel(){
-    loader.load( 'assets/models/peabodyAward/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/peabodyAward/scene.gltf', function (gltf) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
         model = gltf.scene.children[0]; 
@@ -99,7 +99,7 @@ function addPeabodyAwardModel(){
 }
 
 function addMarkTwainAwardModel(){
-    loader.load( 'assets/models/markTwainAward/scene.gltf', function ( gltf ) {
+    loader.load( 'assets/models/markTwainAward/scene.gltf', function (gltf) {
         markTwainAwardModel = gltf.scene;
         markTwainAwardModel.scale.set(11, 11, 11);
         markTwainAwardModel.position.x = 22;
