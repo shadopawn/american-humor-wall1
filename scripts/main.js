@@ -286,12 +286,14 @@ function moveModelsToSelectionPositions(selectedModel){
     moveModelsToCorner(selectedModel);
 }
 
+const cornerModelSpacing = 25;
+
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
-            newCornerPosition.x += 25;
+            newCornerPosition.x += cornerModelSpacing;
         }
     });
 }
@@ -305,7 +307,7 @@ function updateCornerPosition(){
     modelList.forEach(model =>{
         if (model != selectedModel){
             model.position.copy(newCornerPosition);
-            newCornerPosition.x += 25;
+            newCornerPosition.x += cornerModelSpacing;
         }
     });
 }
@@ -321,7 +323,7 @@ function getCornerVector(){
 }
 
 function moveModelToCenter(modelToAnimate){
-    const centerPosition = new THREE.Vector3( 0, 6, 10 );
+    const centerPosition = new THREE.Vector3(0, 6, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
 }
 
