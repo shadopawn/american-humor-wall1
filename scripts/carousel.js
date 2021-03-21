@@ -8,7 +8,7 @@ function setupCarousel(){
         return;
     }
 
-    flickity = new Flickity( carousel, {
+    flickity = new Flickity(carousel, {
         wrapAround : true,
         pageDots: false,
         imagesLoaded: true
@@ -27,7 +27,7 @@ function setupCarousel(){
     }
 
     setPreviousNextNames(0);
-    flickity.on( 'change', function( index ) {
+    flickity.on('change', index => {
         setPreviousNextNames(index);
     });
 
