@@ -14,17 +14,17 @@ function setupCarousel(){
         imagesLoaded: true
     });
 
-    let nextButton = document.querySelector(".flickity-prev-next-button.next");
+    let nextName = addParagraphElement(".flickity-prev-next-button.next", "next-carousel-name");
 
-    let nextName = document.createElement("P");
-    nextName.className = "next-carousel-name";
-    nextButton.appendChild(nextName);
+    let previousName = addParagraphElement(".flickity-prev-next-button.previous", "previous-carousel-name");
 
-    let previousButton = document.querySelector(".flickity-prev-next-button.previous");
-
-    let previousName = document.createElement("P");
-    previousName.className = "previous-carousel-name";
-    previousButton.appendChild(previousName);
+    function addParagraphElement(parentSelector, className){
+        let parent = document.querySelector(parentSelector);
+        let paragraph = document.createElement("P");
+        paragraph.className = className;
+        parent.appendChild(paragraph);
+        return paragraph;
+    }
 
     setPreviousNextNames(0);
     flickity.on( 'change', function( index ) {
@@ -32,13 +32,13 @@ function setupCarousel(){
     });
 
     function setPreviousNextNames(index){
-        let previousCell = getPreviousCell(index);
-        let previousCellName= previousCell.querySelector(".carousel-name");
-        previousName.innerText = previousCellName.innerText;
-
         let nextCell = getNextCell(index);
         let nextCellName = nextCell.querySelector(".carousel-name");
         nextName.innerText = nextCellName.innerText;
+
+        let previousCell = getPreviousCell(index);
+        let previousCellName = previousCell.querySelector(".carousel-name");
+        previousName.innerText = previousCellName.innerText;
     }
 
     function getPreviousCell(index){
