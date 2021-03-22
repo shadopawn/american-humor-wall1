@@ -130,9 +130,10 @@ video{
 
 .footnotes{
     margin-top: 70px;
-    font-size: 0.6em;
+    font-size: 0.6em;   
 }
 
 .footnotes p{
     margin: 0px;
+    line-height: 1.6;
 }
