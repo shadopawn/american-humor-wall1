@@ -133,7 +133,7 @@ video{
 }
 
 .footnotes{
-    margin-top: 70px;
+    margin-top: var(--bottom-margin);
     font-size: 0.6em;   
 }
 
