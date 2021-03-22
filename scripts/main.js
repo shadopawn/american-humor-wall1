@@ -15,14 +15,14 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
     
 }
 
 function setupCamera(){
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
     camera.position.z = 60;
-    camera.position.y = 20;
+    camera.position.y = 5;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 }
 
@@ -105,7 +105,7 @@ function addMarkTwainAwardModel(){
         markTwainAwardModel.position.x = 22;
         model = gltf.scene.children[0]; 
         model.position.z = 0;
-        model.position.y = -1.2;
+        model.position.y = -1.1;
         applyMeshSettings(model);
         scene.add(markTwainAwardModel);
 
@@ -323,7 +323,7 @@ function getCornerVector(){
 }
 
 function moveModelToCenter(modelToAnimate){
-    const centerPosition = new THREE.Vector3(0, 6, 10);
+    const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
 }
 
