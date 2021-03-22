@@ -71,9 +71,12 @@ function addKennedyAwardModel(){
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         kennedyAwardModel.position.x = -22;
+        
         model = gltf.scene.children[0];
         model.position.z = 0;
+        model.rotation.x = -0.2;
         applyMeshSettings(model);
+        
         scene.add(kennedyAwardModel);
 
         modelList.push(kennedyAwardModel);
@@ -87,8 +90,10 @@ function addPeabodyAwardModel(){
     loader.load( 'assets/models/peabodyAward/scene.gltf', function (gltf) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
+
         model = gltf.scene.children[0]; 
         applyMeshSettings(model);
+
         scene.add(peabodyAwardModel);
 
         modelList.push(peabodyAwardModel);
@@ -103,10 +108,12 @@ function addMarkTwainAwardModel(){
         markTwainAwardModel = gltf.scene;
         markTwainAwardModel.scale.set(11, 11, 11);
         markTwainAwardModel.position.x = 22;
+
         model = gltf.scene.children[0]; 
         model.position.z = 0;
         model.position.y = -1.1;
         applyMeshSettings(model);
+        
         scene.add(markTwainAwardModel);
 
         modelList.push(markTwainAwardModel);
