@@ -86,13 +86,17 @@ canvas {
     margin-top: 0;
 }
 
+.side-by-side > *:first-child{
+    margin-right: 20px;
+}
+
 .center-vertically{
     display: flex;
     align-items: center;
 }
 
 .image-and-caption{
-    margin: 0px 10px var(--bottom-margin);
+    margin-bottom: var(--bottom-margin);
 }
 
 .image-and-caption img{ 
@@ -118,10 +122,6 @@ canvas {
 
 .audio-icon:hover{
     width: 40px;
-}
-
-.video-quote{
-    padding-left: 30px;
 }
 
 video{
