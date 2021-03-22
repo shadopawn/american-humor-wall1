@@ -112,6 +112,10 @@ canvas {
     font-size: 0.75em;
 }
 
+.smaller-image{
+    height: 300px;
+}
+
 .audio-icon{
     position: absolute;
     transform: translateX(-60px) translateY(68px);
