@@ -91,7 +91,7 @@ function addPeabodyAwardModel(){
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
 
-        model = gltf.scene.children[0]; 
+        model = gltf.scene.children[0];
         applyMeshSettings(model);
 
         scene.add(peabodyAwardModel);
@@ -109,11 +109,11 @@ function addMarkTwainAwardModel(){
         markTwainAwardModel.scale.set(11, 11, 11);
         markTwainAwardModel.position.x = 22;
 
-        model = gltf.scene.children[0]; 
+        model = gltf.scene.children[0];
         model.position.z = 0;
         model.position.y = -1.1;
         applyMeshSettings(model);
-        
+
         scene.add(markTwainAwardModel);
 
         modelList.push(markTwainAwardModel);
@@ -204,17 +204,17 @@ const mouse = new THREE.Vector2();
 function onMouseClick(event){
     event.preventDefault();
 
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
     // update the picking ray with the camera and mouse position
-	raycaster.setFromCamera( mouse, camera );
+	raycaster.setFromCamera(mouse, camera);
 
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects( scene.children, true );
+	const intersects = raycaster.intersectObjects(scene.children, true);
     
     let intersectedModel;
-	for ( let i = 0; i < intersects.length; i ++ ) {
+	for (let i = 0; i < intersects.length; i ++) {
         let intersectedObject = intersects[i].object;
 
         intersectedObject.traverseAncestors(parentObject => {
