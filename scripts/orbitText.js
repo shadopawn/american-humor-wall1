@@ -1,6 +1,7 @@
 const firstOrbitTextOffset = 800;
-const orbitTextSpacing = 1500;
-const staticDistance = 2000;
+const spaceBetweenOrbitTexts = 1500;
+const staticDistance = 0;
+const rotateInOutDuration = 700;
 
 function addAllOrbitAnimations(){
     const orbitTexts = document.querySelectorAll(".orbit-text");
@@ -8,34 +9,37 @@ function addAllOrbitAnimations(){
     let currentPosition = firstOrbitTextOffset;
     orbitTexts.forEach(orbitText => {
         addOrbitAnimations(orbitText, currentPosition);
-        currentPosition += (orbitTextSpacing + staticDistance);
+        currentPosition += (staticDistance + 2*rotateInOutDuration + spaceBetweenOrbitTexts);
     });
-
-    document.getElementById("right-side").style.marginTop = currentPosition + "px";
+    
+    const totalOrbitTextDistance = currentPosition;
+    document.getElementById("right-side").style.marginTop = totalOrbitTextDistance + "px";
 }
 
 const orbitTextController = new ScrollMagic.Controller();
 
 function addOrbitAnimations(element, start){
+    //Add animation to rotate in
     let rotateTimeLine = new TimelineMax();
     rotateTimeLine.to(element, 4, {x: 0, rotationY: 0, opacity: 3});
 
-    let rotateOrbitTextScene = new ScrollMagic.Scene({
-        duration: 700, 
+    new ScrollMagic.Scene({
+        duration: rotateInOutDuration, 
         offset: start
     })
         .setTween(rotateTimeLine)
         .addTo(orbitTextController);
 
 
+    //Add animation to rotate out
     let fadeTimeLine = new TimelineMax();
     fadeTimeLine.to(element, 4, {x: 400, rotationY: 70, opacity: 0});
 
-    const fadeOut = start + staticDistance;
+    const rotateOut = start + staticDistance + rotateInOutDuration;
 
-    let fadeOrbitTextScene = new ScrollMagic.Scene({
-        duration: 700, 
-        offset: fadeOut
+    new ScrollMagic.Scene({
+        duration: rotateInOutDuration,
+        offset: rotateOut
     })
         .setTween(fadeTimeLine)
         .addTo(orbitTextController);
