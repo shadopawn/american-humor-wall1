@@ -15,8 +15,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    scene.add( new THREE.AxesHelper(500));
-    
+    //scene.add( new THREE.AxesHelper(500));
 }
 
 function setupCamera(){
@@ -144,16 +143,6 @@ window.addEventListener("resize", () => {
     updateCornerPosition();
 });
 
-function animate() {
-
-    requestAnimationFrame(animate);
-
-    applyAngularVelocity();
-    
-    renderer.render(scene, camera);
-}
-
-
 let angularVelocity = 0;
 
 window.onscroll = function (e) {
@@ -167,7 +156,9 @@ function applyAngularVelocity(){
 
     if (Math.abs(angularVelocity) > 0.00001){
         angularVelocity *= 0.99;
-    }else{
+    }
+    else
+    {
         angularVelocity = 0;
     }
 }
@@ -197,14 +188,42 @@ var getScrollSpeed = (function(settings){
     };
 })();
 
+let mouseMoveEvent;
+//window.addEventListener("mousemove", onMouseMove);
+function onMouseMove(event){
+    event.preventDefault();
+    mouseMoveEvent = event
+}
+
+function setMouseCursorStyle(event){
+    if(event){
+        if(isModelIntersected(event)){
+            document.body.style.cursor = "pointer";
+        }
+        else
+        {
+            document.body.style.cursor = "default";
+        }
+    }
+
+    
+}
+
 window.addEventListener("click", onMouseClick);
+function onMouseClick(event){
+    event.preventDefault();
+
+    let intersectedModel = getIntersectedModel(event);
+
+    if(intersectedModel){
+        selectModel(intersectedModel);
+    }
+}
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-function onMouseClick(event){
-    event.preventDefault();
-
+function getIntersectedModel(event){
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
@@ -215,21 +234,28 @@ function onMouseClick(event){
 	const intersects = raycaster.intersectObjects(scene.children, true);
     
     let intersectedModel;
-	for (let i = 0; i < intersects.length; i ++) {
-        let intersectedObject = intersects[i].object;
-
+    if (intersects.length > 0){
+        let intersectedObject = intersects[0].object;
         intersectedObject.traverseAncestors(parentObject => {
             if (modelList.includes(parentObject)){
                 intersectedModel = parentObject;
             }
         });
-
-	}
-
-    if(intersectedModel){
-        selectModel(intersectedModel);
     }
+    return intersectedModel;
+}
 
+function isModelIntersected(event){
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    // update the picking ray with the camera and mouse position
+	raycaster.setFromCamera(mouse, camera);
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects(scene.children, true);
+    
+    return (intersects.length > 0);
 }
 
 async function selectModel(model){
@@ -381,6 +407,17 @@ function modelsToOriginalPositionOnScroll(){
             .setTween(model.position, 1, {x: originalPosition.x, y: originalPosition.y, z: originalPosition.z})
             .addTo(moveToOriginalPositionController);
     });
+}
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    applyAngularVelocity();
+
+    setMouseCursorStyle(mouseMoveEvent);
+    
+    renderer.render(scene, camera);
 }
 
 init();
