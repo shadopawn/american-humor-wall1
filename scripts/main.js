@@ -63,6 +63,7 @@ function setupLighting(){
 const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
+// based on model load time the modelList order isn't always consistent
 let modelList = [];
 let originalPositions = [];
 
@@ -83,7 +84,7 @@ function addKennedyAwardModel(){
         originalPositions.push(kennedyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
-    } );
+    });
 }
 
 function addPeabodyAwardModel(){
@@ -100,7 +101,7 @@ function addPeabodyAwardModel(){
         originalPositions.push(peabodyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
-    } );
+    });
 }
 
 function addMarkTwainAwardModel(){
@@ -120,7 +121,7 @@ function addMarkTwainAwardModel(){
         originalPositions.push(markTwainAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
-    } );
+    });
 }
 
 function applyMeshSettings(model){
@@ -293,7 +294,7 @@ function moveModelsToSelectionPositions(selectedModel){
     moveModelsToCorner(selectedModel);
 }
 
-const cornerModelSpacing = 25;
+const cornerModelSpacing = -25;
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
@@ -321,7 +322,7 @@ function updateCornerPosition(){
 
 function getCornerVector(){
     let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
-    let corner2D = new THREE.Vector2(0.825, 0.85); // NDC (Normalized Device Coordinate) of the corner position
+    let corner2D = new THREE.Vector2(0.875, 0.85); // NDC (Normalized Device Coordinate) of the corner position
     let cornerPoint = new THREE.Vector3();
 
     raycaster.setFromCamera(corner2D, camera);
