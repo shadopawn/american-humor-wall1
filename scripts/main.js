@@ -342,6 +342,7 @@ function moveModelsToCorner(selectedModel){
     modelList.forEach(model =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
+            animateModelToYRotation(model, -0.4);
             newCornerPosition.x += cornerModelSpacing;
         }
     });
@@ -374,10 +375,15 @@ function getCornerVector(){
 function moveModelToCenter(modelToAnimate){
     const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
+    animateModelToYRotation(modelToAnimate, 0);
 }
 
 function moveModelToPosition(modelToAnimate, position){
     TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Power2.easeInOut});
+}
+
+function animateModelToYRotation(modelToAnimate, rotation){
+    TweenMax.to(modelToAnimate.rotation, 4, {y: rotation, ease: Power2.easeInOut});
 }
 
 let moveToSideScene;
@@ -420,6 +426,16 @@ function modelsToOriginalPositionOnScroll(){
             triggerHook: 0.1
         })
             .setTween(model.position, 1, {x: originalPosition.x, y: originalPosition.y, z: originalPosition.z})
+            .addTo(moveToOriginalPositionController);
+    });
+
+    modelList.forEach((model) =>{
+        new ScrollMagic.Scene({
+            triggerElement: "#bottom-spacer",
+            duration: scrollDuration,
+            triggerHook: 0.1
+        })
+            .setTween(model.rotation, 1, {y: 0})
             .addTo(moveToOriginalPositionController);
     });
 }
