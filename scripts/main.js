@@ -8,6 +8,8 @@ function init() {
     setupRenderer();
 
     document.body.appendChild(renderer.domElement);
+
+    addCubeMap();
     
     setupLighting();
 
@@ -15,7 +17,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
 }
 
 function setupCamera(){
@@ -30,16 +32,30 @@ function setupRenderer(){
     renderer.setClearColor(0xdddddd, 0 );
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    renderer.toneMapping = THREE.ReinhardToneMapping;
-    renderer.toneMappingExposure = 2.3;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+
     renderer.shadowMap.enabled = true;
 
     renderer.gammaOutput = true;
-    renderer.gammaFactor = 2.2;
+    renderer.gammaFactor = 9.2;
+}
+
+function addCubeMap(){
+    scene.environment = new THREE.CubeTextureLoader()
+	.setPath( 'assets/cubeMap/Bridge2/' )
+	.load( [
+		'negx.jpg',
+		'negy.jpg',
+		'negz.jpg',
+		'posx.jpg',
+		'posy.jpg',
+		'posz.jpg'
+	] );
 }
 
 function setupLighting(){
-    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 1);
+    const hemiLight = new THREE.HemisphereLight(0xc7c1e1, 0x724d4d, 0.5);
     scene.add(hemiLight);
 
     const directionalLight = new THREE.DirectionalLight(0xe2f3ff, 2);
@@ -196,6 +212,7 @@ function onMouseMove(event){
 }
 
 function setMouseCursorStyle(event){
+    // possibly update only if mouse position has sufficient delta
     if(event){
         if(isModelIntersected(event)){
             document.body.style.cursor = "pointer";
@@ -205,8 +222,6 @@ function setMouseCursorStyle(event){
             document.body.style.cursor = "default";
         }
     }
-
-    
 }
 
 window.addEventListener("click", onMouseClick);
