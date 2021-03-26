@@ -1,6 +1,6 @@
 Model Information:
 * title:	Mark Twain Award
-* source:	https://sketchfab.com/3d-models/mark-twain-award-b2ec64dc80f04566b74130c500327a6e
+* source:	https://sketchfab.com/3d-models/mark-twain-award-03029fdd394a47e89ea02d49c608f3bb
 * author:	brruble (https://sketchfab.com/brruble)
 
 Model License:
@@ -8,4 +8,4 @@ Model License:
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Mark Twain Award" (https://sketchfab.com/3d-models/mark-twain-award-b2ec64dc80f04566b74130c500327a6e) by brruble (https://sketchfab.com/brruble) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Mark Twain Award" (https://sketchfab.com/3d-models/mark-twain-award-03029fdd394a47e89ea02d49c608f3bb) by brruble (https://sketchfab.com/brruble) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

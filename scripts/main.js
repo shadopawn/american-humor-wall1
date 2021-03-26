@@ -122,12 +122,13 @@ function addPeabodyAwardModel(){
 function addMarkTwainAwardModel(){
     loader.load( 'assets/models/markTwainAward/scene.gltf', function (gltf) {
         markTwainAwardModel = gltf.scene;
-        markTwainAwardModel.scale.set(11, 11, 11);
+        markTwainAwardModel.scale.set(2, 2, 2);
         markTwainAwardModel.position.x = 22;
 
         model = gltf.scene.children[0];
         model.position.z = 0;
-        model.position.y = -1.1;
+        //model.position.x = -1.6;
+        model.position.y = -4;
         applyMeshSettings(model);
 
         scene.add(markTwainAwardModel);
