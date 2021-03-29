@@ -79,14 +79,16 @@ const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
 // based on model load time the modelList order isn't always consistent
+// modelList contains objects with the model and originalPosition
 let modelList = [];
-let originalPositions = [];
 
 function addKennedyAwardModel(){
     loader.load( 'assets/models/kennedyAward/scene.gltf', function (gltf) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         kennedyAwardModel.position.x = -22;
+
+        kennedyAwardModel.name = "Kennedy Award";
         
         model = gltf.scene.children[0];
         model.position.z = 0;
@@ -95,8 +97,8 @@ function addKennedyAwardModel(){
         
         scene.add(kennedyAwardModel);
 
-        modelList.push(kennedyAwardModel);
-        originalPositions.push(kennedyAwardModel.position.clone());
+        modelList.push({model: kennedyAwardModel, originalPosition: kennedyAwardModel.position.clone()});
+        //originalPositions.push(kennedyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
@@ -107,13 +109,15 @@ function addPeabodyAwardModel(){
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
 
+        peabodyAwardModel.name = "Peabody Award";
+
         model = gltf.scene.children[0];
         applyMeshSettings(model);
 
         scene.add(peabodyAwardModel);
 
-        modelList.push(peabodyAwardModel);
-        originalPositions.push(peabodyAwardModel.position.clone());
+        modelList.push({model: peabodyAwardModel, originalPosition: peabodyAwardModel.position.clone()});
+        //originalPositions.push(peabodyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
@@ -125,6 +129,8 @@ function addMarkTwainAwardModel(){
         markTwainAwardModel.scale.set(2, 2, 2);
         markTwainAwardModel.position.x = 22;
 
+        markTwainAwardModel.name = "Mark Twain Award";
+
         model = gltf.scene.children[0];
         model.position.z = 0;
         //model.position.x = -1.6;
@@ -133,8 +139,8 @@ function addMarkTwainAwardModel(){
 
         scene.add(markTwainAwardModel);
 
-        modelList.push(markTwainAwardModel);
-        originalPositions.push(markTwainAwardModel.position.clone());
+        modelList.push({model: markTwainAwardModel, originalPosition: markTwainAwardModel.position.clone()});
+        //originalPositions.push(markTwainAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
@@ -253,7 +259,7 @@ function getIntersectedModel(event){
     if (intersects.length > 0){
         let intersectedObject = intersects[0].object;
         intersectedObject.traverseAncestors(parentObject => {
-            if (modelList.includes(parentObject)){
+            if (modelList.some(element => element.model == parentObject)){
                 intersectedModel = parentObject;
             }
         });
@@ -275,6 +281,7 @@ function isModelIntersected(event){
 }
 
 async function selectModel(model){
+
     if (model == selectedModel){
         return;
     }
@@ -340,7 +347,7 @@ const cornerModelSpacing = -25;
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
-    modelList.forEach(model =>{
+    modelList.forEach(({model}) =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += cornerModelSpacing;
@@ -354,7 +361,7 @@ function updateCornerPosition(){
     }
     
     let newCornerPosition = getCornerVector();
-    modelList.forEach(model =>{
+    modelList.forEach(({model}) =>{
         if (model != selectedModel){
             model.position.copy(newCornerPosition);
             newCornerPosition.x += cornerModelSpacing;
@@ -412,9 +419,7 @@ function modelsToOriginalPositionOnScroll(){
 
     let scrollDuration = 1.5*window.innerHeight;
 
-    modelList.forEach((model, index) =>{
-        let originalPosition = originalPositions[index];
-
+    modelList.forEach(({model, originalPosition}) =>{
         new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
             duration: scrollDuration,
