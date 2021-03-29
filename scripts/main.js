@@ -282,6 +282,9 @@ function isModelIntersected(event){
 
 async function selectModel(model){
 
+    modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
+    //console.log(modelList);
+
     if (model == selectedModel){
         return;
     }
