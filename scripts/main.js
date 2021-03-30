@@ -356,7 +356,7 @@ function moveModelsToCorner(selectedModel){
             newCornerPosition.x += cornerModelSpacing;
 
             let forwardYRotation = getNearestForwardRotation(model);
-            animateModelToYRotation(model, forwardYRotation - 0.4);
+            animateModelToYRotation(model, forwardYRotation);
         }
     });
 }
@@ -455,7 +455,6 @@ function modelsToOriginalPositionOnScroll(){
     });
 
     rotateModelToForwardOnScroll(scrollDuration);
-    
 }
 
 function rotateModelToForwardOnScroll(scrollDuration){
