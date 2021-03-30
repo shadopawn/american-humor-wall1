@@ -454,6 +454,11 @@ function modelsToOriginalPositionOnScroll(){
             .addTo(moveToOriginalPositionController);
     });
 
+    rotateModelToForwardOnScroll(scrollDuration);
+    
+}
+
+function rotateModelToForwardOnScroll(scrollDuration){
     let rotationScenes = []
 
     modelList.forEach(({model}) =>{
@@ -462,7 +467,7 @@ function modelsToOriginalPositionOnScroll(){
             duration: scrollDuration,
             triggerHook: 0.1
         })
-            .addTo(moveToOriginalPositionController)
+            .addTo(moveToOriginalPositionController);
 
         rotationScenes.push({
             scene: rotationScene,
@@ -476,8 +481,6 @@ function modelsToOriginalPositionOnScroll(){
             scene.setTween(sceneModel.rotation, 1, {y: forwardYRotation});
         });
     });
-    
-
 }
 
 function animate() {
