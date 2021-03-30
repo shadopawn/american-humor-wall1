@@ -17,7 +17,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
 }
 
 function setupCamera(){
@@ -353,8 +353,10 @@ function moveModelsToCorner(selectedModel){
     modelList.forEach(({model}) =>{
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
-            animateModelToYRotation(model, -0.4);
             newCornerPosition.x += cornerModelSpacing;
+
+            let forwardYRotation = getNearestForwardRotation(model);
+            animateModelToYRotation(model, forwardYRotation - 0.4);
         }
     });
 }
@@ -386,7 +388,8 @@ function getCornerVector(){
 function moveModelToCenter(modelToAnimate){
     const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
-    animateModelToYRotation(modelToAnimate, 0);
+    let forwardYRotation = getNearestForwardRotation(modelToAnimate);
+    animateModelToYRotation(modelToAnimate, forwardYRotation);
 }
 
 function moveModelToPosition(modelToAnimate, position){
@@ -395,6 +398,19 @@ function moveModelToPosition(modelToAnimate, position){
 
 function animateModelToYRotation(modelToAnimate, rotation){
     TweenMax.to(modelToAnimate.rotation, 4, {y: rotation, ease: Power2.easeInOut});
+}
+
+function getNearestForwardRotation(model){
+    let modelForward = new THREE.Vector3();
+    model.getWorldDirection(modelForward);
+    let angleToForward = modelForward.angleTo(new THREE.Vector3(0, 0, 1));
+    if (modelForward.x > 0){
+        return model.rotation.y - angleToForward;
+    }
+    else
+    {
+        return model.rotation.y + angleToForward;
+    }
 }
 
 let moveToSideScene;
@@ -438,15 +454,30 @@ function modelsToOriginalPositionOnScroll(){
             .addTo(moveToOriginalPositionController);
     });
 
-    modelList.forEach((model) =>{
-        new ScrollMagic.Scene({
+    let rotationScenes = []
+
+    modelList.forEach(({model}) =>{
+        let rotationScene = new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
             duration: scrollDuration,
             triggerHook: 0.1
         })
-            .setTween(model.rotation, 1, {y: 0})
-            .addTo(moveToOriginalPositionController);
+            .addTo(moveToOriginalPositionController)
+
+        rotationScenes.push({
+            scene: rotationScene,
+            sceneModel: model
+        });
     });
+
+    rotationScenes.forEach(({scene, sceneModel}) =>{
+        scene.on("start", (event) => {
+            let forwardYRotation = getNearestForwardRotation(sceneModel);
+            scene.setTween(sceneModel.rotation, 1, {y: forwardYRotation});
+        });
+    });
+    
+
 }
 
 function animate() {
