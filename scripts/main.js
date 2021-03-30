@@ -17,7 +17,7 @@ function init() {
     addPeabodyAwardModel();
     addMarkTwainAwardModel();
 
-    //scene.add( new THREE.AxesHelper(500));
+    scene.add( new THREE.AxesHelper(500));
 }
 
 function setupCamera(){
@@ -98,7 +98,6 @@ function addKennedyAwardModel(){
         scene.add(kennedyAwardModel);
 
         modelList.push({model: kennedyAwardModel, originalPosition: kennedyAwardModel.position.clone()});
-        //originalPositions.push(kennedyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
@@ -117,7 +116,6 @@ function addPeabodyAwardModel(){
         scene.add(peabodyAwardModel);
 
         modelList.push({model: peabodyAwardModel, originalPosition: peabodyAwardModel.position.clone()});
-        //originalPositions.push(peabodyAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
@@ -133,14 +131,13 @@ function addMarkTwainAwardModel(){
 
         model = gltf.scene.children[0];
         model.position.z = 0;
-        //model.position.x = -1.6;
+        model.position.x = -1.9;
         model.position.y = -4;
         applyMeshSettings(model);
 
         scene.add(markTwainAwardModel);
 
         modelList.push({model: markTwainAwardModel, originalPosition: markTwainAwardModel.position.clone()});
-        //originalPositions.push(markTwainAwardModel.position.clone());
     }, undefined, function (error) {
         console.error(error);
     });
