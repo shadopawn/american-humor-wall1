@@ -354,6 +354,9 @@ function moveModelsToCorner(selectedModel){
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += cornerModelSpacing;
+
+            let forwardYRotation = getNearestForwardRotation(model);
+            animateModelToYRotation(model, forwardYRotation);
         }
     });
 }
@@ -385,10 +388,29 @@ function getCornerVector(){
 function moveModelToCenter(modelToAnimate){
     const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
+    let forwardYRotation = getNearestForwardRotation(modelToAnimate);
+    animateModelToYRotation(modelToAnimate, forwardYRotation);
 }
 
 function moveModelToPosition(modelToAnimate, position){
     TweenMax.to(modelToAnimate.position, 4, {x: position.x, y: position.y, z: position.z, ease: Power2.easeInOut});
+}
+
+function animateModelToYRotation(modelToAnimate, rotation){
+    TweenMax.to(modelToAnimate.rotation, 4, {y: rotation, ease: Power2.easeInOut});
+}
+
+function getNearestForwardRotation(model){
+    let modelForward = new THREE.Vector3();
+    model.getWorldDirection(modelForward);
+    let angleToForward = modelForward.angleTo(new THREE.Vector3(0, 0, 1));
+    if (modelForward.x > 0){
+        return model.rotation.y - angleToForward;
+    }
+    else
+    {
+        return model.rotation.y + angleToForward;
+    }
 }
 
 let moveToSideScene;
@@ -430,6 +452,33 @@ function modelsToOriginalPositionOnScroll(){
         })
             .setTween(model.position, 1, {x: originalPosition.x, y: originalPosition.y, z: originalPosition.z})
             .addTo(moveToOriginalPositionController);
+    });
+
+    rotateModelToForwardOnScroll(scrollDuration);
+}
+
+function rotateModelToForwardOnScroll(scrollDuration){
+    let rotationScenes = []
+
+    modelList.forEach(({model}) =>{
+        let rotationScene = new ScrollMagic.Scene({
+            triggerElement: "#bottom-spacer",
+            duration: scrollDuration,
+            triggerHook: 0.1
+        })
+            .addTo(moveToOriginalPositionController);
+
+        rotationScenes.push({
+            scene: rotationScene,
+            sceneModel: model
+        });
+    });
+
+    rotationScenes.forEach(({scene, sceneModel}) =>{
+        scene.on("start", (event) => {
+            let forwardYRotation = getNearestForwardRotation(sceneModel);
+            scene.setTween(sceneModel.rotation, 1, {y: forwardYRotation});
+        });
     });
 }
 
