@@ -485,7 +485,7 @@ function animate() {
 
     applyAngularVelocity();
 
-    setMouseCursorStyle(mouseMoveEvent);
+    //setMouseCursorStyle(mouseMoveEvent);
     
     renderer.render(scene, camera);
 }
