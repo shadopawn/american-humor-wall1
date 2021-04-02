@@ -351,10 +351,10 @@
   ],
   "images": [
     {
-      "uri": "textures/Plaque_baseColor.jpeg"
+      "uri": "textures/Plaque_baseColor.jpg"
     },
     {
-      "uri": "textures/Coin_baseColor.png"
+      "uri": "textures/Coin_baseColor.jpg"
     }
   ],
   "materials": [

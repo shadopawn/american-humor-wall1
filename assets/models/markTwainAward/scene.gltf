@@ -369,16 +369,16 @@
   ],
   "images": [
     {
-      "uri": "textures/Twain_06bust_metallicRoughness.png"
+      "uri": "textures/Twain_06bust_metallicRoughness.jpg"
     },
     {
-      "uri": "textures/Twain_06bust_clearcoat.png"
+      "uri": "textures/Twain_06bust_clearcoat.jpg"
     },
     {
       "uri": "textures/Twain_06plaque_baseColor.png"
     },
     {
-      "uri": "textures/Twain_06plaque_metallicRoughness.png"
+      "uri": "textures/Twain_06plaque_metallicRoughness.jpg"
     }
   ],
   "materials": [
