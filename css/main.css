@@ -127,7 +127,7 @@ canvas {
 }
 
 .audio-icon:hover{
-    width: 40px;
+    transform: translateX(-60px) translateY(68px) scale(1.15);
 }
 
 video{
