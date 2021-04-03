@@ -43,15 +43,15 @@ function setupRenderer(){
 
 function addCubeMap(){
     scene.environment = new THREE.CubeTextureLoader()
-	.setPath( 'assets/cubeMap/Bridge2/' )
-	.load( [
-		'negx.jpg',
-		'negy.jpg',
-		'negz.jpg',
-		'posx.jpg',
-		'posy.jpg',
-		'posz.jpg'
-	] );
+        .setPath('assets/cubeMap/Bridge2/')
+        .load([
+            'negx.jpg',
+            'negy.jpg',
+            'negz.jpg',
+            'posx.jpg',
+            'posy.jpg',
+            'posz.jpg'
+        ]);
 }
 
 function setupLighting(){
@@ -83,7 +83,7 @@ let selectedModel;
 let modelList = [];
 
 function addKennedyAwardModel(){
-    loader.load( 'assets/models/kennedyAward/scene.gltf', function (gltf) {
+    loader.load('assets/models/kennedyAward/scene.gltf', function (gltf) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
         kennedyAwardModel.position.x = -22;
@@ -104,7 +104,7 @@ function addKennedyAwardModel(){
 }
 
 function addPeabodyAwardModel(){
-    loader.load( 'assets/models/peabodyAward/scene.gltf', function (gltf) {
+    loader.load('assets/models/peabodyAward/scene.gltf', function (gltf) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
 
@@ -122,7 +122,7 @@ function addPeabodyAwardModel(){
 }
 
 function addMarkTwainAwardModel(){
-    loader.load( 'assets/models/markTwainAward/scene.gltf', function (gltf) {
+    loader.load('assets/models/markTwainAward/scene.gltf', function (gltf) {
         markTwainAwardModel = gltf.scene;
         markTwainAwardModel.scale.set(2, 2, 2);
         markTwainAwardModel.position.x = 22;
@@ -146,7 +146,7 @@ function addMarkTwainAwardModel(){
 function applyMeshSettings(model){
     model.traverse(mesh => { 
         if (mesh.isMesh) {
-            mesh.castShadow = true; 
+            mesh.castShadow = true;
             mesh.receiveShadow = true;
             if(mesh.material.map)
                 mesh.material.map.anisotropy = 16;
