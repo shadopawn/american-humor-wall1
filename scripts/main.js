@@ -285,8 +285,6 @@ async function selectModel(model){
     if (model == selectedModel){
         return;
     }
-
-    console.log("model selected");
     
     selectedModel = model;
 
