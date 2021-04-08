@@ -1,6 +1,6 @@
 const firstOrbitTextOffset = 800;
 const spaceBetweenOrbitTexts = 1500;
-const staticDistance = 0;
+const staticDistance = 1200;
 const rotateInOutDuration = 700;
 
 function addAllOrbitAnimations(){
