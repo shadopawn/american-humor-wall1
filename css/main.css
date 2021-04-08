@@ -64,6 +64,7 @@ canvas {
     font-family: 'Source Serif Pro', serif;
     margin-top: 0px;
     margin-bottom: 2px;
+    font-weight: 900;
 }
 
 .quote-attribution{
