@@ -86,7 +86,6 @@ function addKennedyAwardModel(){
     loader.load('assets/models/kennedyAward/scene.gltf', function (gltf) {
         kennedyAwardModel = gltf.scene;
         kennedyAwardModel.scale.set(0.01, 0.01, 0.01);
-        kennedyAwardModel.position.x = -22;
 
         kennedyAwardModel.name = "Kennedy Award";
         
@@ -107,6 +106,7 @@ function addPeabodyAwardModel(){
     loader.load('assets/models/peabodyAward/scene.gltf', function (gltf) {
         peabodyAwardModel = gltf.scene;
         peabodyAwardModel.scale.set(2.2, 2.2, 2.2);
+        peabodyAwardModel.position.x = 22;
 
         peabodyAwardModel.name = "Peabody Award";
 
@@ -125,7 +125,7 @@ function addMarkTwainAwardModel(){
     loader.load('assets/models/markTwainAward/scene.gltf', function (gltf) {
         markTwainAwardModel = gltf.scene;
         markTwainAwardModel.scale.set(2, 2, 2);
-        markTwainAwardModel.position.x = 22;
+        markTwainAwardModel.position.x = -22;
 
         markTwainAwardModel.name = "Mark Twain Award";
 
@@ -212,7 +212,7 @@ let mouseMoveEvent;
 //window.addEventListener("mousemove", onMouseMove);
 function onMouseMove(event){
     event.preventDefault();
-    mouseMoveEvent = event
+    mouseMoveEvent = event;
 }
 
 function setMouseCursorStyle(event){
