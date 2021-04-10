@@ -80,6 +80,7 @@ let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
 // based on model load time the modelList order isn't always consistent
 // modelList contains objects with the model and originalPosition
+// Possibly add collision meshes to improve raycast performance
 let modelList = [];
 
 function addKennedyAwardModel(){
