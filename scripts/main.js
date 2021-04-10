@@ -99,7 +99,10 @@ function addKennedyAwardModel(){
         
         scene.add(kennedyAwardModel);
 
-        modelList.push({model: kennedyAwardModel, originalPosition: kennedyAwardModel.position.clone()});
+        modelList.push({
+            model: kennedyAwardModel,
+            originalPosition: kennedyAwardModel.position.clone()
+        });
     }, undefined, function (error) {
         console.error(error);
     });
@@ -127,7 +130,10 @@ function addPeabodyAwardModel(){
 
         scene.add(peabodyAwardModel);
 
-        modelList.push({model: peabodyAwardModel, originalPosition: peabodyAwardModel.position.clone()});
+        modelList.push({
+            model: peabodyAwardModel,
+            originalPosition: peabodyAwardModel.position.clone()
+        });
     }, undefined, function (error) {
         console.error(error);
     });
@@ -149,7 +155,10 @@ function addMarkTwainAwardModel(){
 
         scene.add(markTwainAwardModel);
 
-        modelList.push({model: markTwainAwardModel, originalPosition: markTwainAwardModel.position.clone()});
+        modelList.push({
+            model: markTwainAwardModel,
+            originalPosition: markTwainAwardModel.position.clone()
+        });
     }, undefined, function (error) {
         console.error(error);
     });
