@@ -94,6 +94,8 @@ function addKennedyAwardModel(){
         model.position.z = 0;
         model.rotation.x = -0.2;
         applyMeshSettings(model);
+
+        addKennedyCollisionMesh(model);
         
         scene.add(kennedyAwardModel);
 
@@ -101,6 +103,15 @@ function addKennedyAwardModel(){
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addKennedyCollisionMesh(model){
+    const geometry = new THREE.PlaneGeometry(1800, 2000, 1);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 1, transparent: true,});
+    const plane = new THREE.Mesh(geometry, material);
+    plane.position.y = 160;
+    model.add(plane);
+    return plane;
 }
 
 function addPeabodyAwardModel(){
