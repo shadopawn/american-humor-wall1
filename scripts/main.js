@@ -109,12 +109,10 @@ function addKennedyAwardModel(){
 }
 
 function addKennedyCollisionMesh(model){
-    let boundingBox = new THREE.Box3().setFromObject(model);
-    let boundingBoxSize = new THREE.Vector3();
-    boundingBox.getSize(boundingBoxSize);
+    let boundingBoxSize = getBoundingBoxSize(model);
 
     const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y);
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 1, transparent: true});
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
     const plane = new THREE.Mesh(geometry, material);
     plane.position.set(25, 160, -20);
     model.add(plane);
@@ -132,6 +130,8 @@ function addPeabodyAwardModel(){
         model = gltf.scene.children[0];
         applyMeshSettings(model);
 
+        addPeabodyCollisionMesh(model);
+
         scene.add(peabodyAwardModel);
 
         modelList.push({
@@ -141,6 +141,18 @@ function addPeabodyAwardModel(){
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addPeabodyCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    let radius = boundingBoxSize.x/2
+    const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.rotation.x = Math.PI/2
+    model.add(cylinder);
+    return cylinder;
 }
 
 function addMarkTwainAwardModel(){
@@ -179,6 +191,12 @@ function applyMeshSettings(model){
     });
 }
 
+function getBoundingBoxSize(model){
+    let boundingBox = new THREE.Box3().setFromObject(model);
+    let boundingBoxSize = new THREE.Vector3();
+    boundingBox.getSize(boundingBoxSize);
+    return boundingBoxSize;
+}
 
 window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
