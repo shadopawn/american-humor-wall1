@@ -113,8 +113,8 @@ function addKennedyCollisionMesh(model){
     let boundingBoxSize = new THREE.Vector3();
     boundingBox.getSize(boundingBoxSize);
 
-    const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y, 1);
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 1, transparent: true,});
+    const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 1, transparent: true});
     const plane = new THREE.Mesh(geometry, material);
     plane.position.set(25, 160, -20);
     model.add(plane);
