@@ -150,7 +150,7 @@ function addPeabodyCollisionMesh(model){
     const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
     const cylinder = new THREE.Mesh(geometry, material);
-    cylinder.rotation.x = Math.PI/2
+    cylinder.rotation.x = Math.PI/2;
     model.add(cylinder);
     return cylinder;
 }
@@ -169,6 +169,8 @@ function addMarkTwainAwardModel(){
         model.position.y = -4;
         applyMeshSettings(model);
 
+        addMarkTwainCollisionMesh(model);
+
         scene.add(markTwainAwardModel);
 
         modelList.push({
@@ -178,6 +180,18 @@ function addMarkTwainAwardModel(){
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addMarkTwainCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    const geometry = new THREE.BoxGeometry(boundingBoxSize.x, boundingBoxSize.y, boundingBoxSize.z);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
+    const cube = new THREE.Mesh(geometry, material);
+    cube.rotation.x = Math.PI/2;
+    cube.position.set(-0.5, 2, 4.2);
+    model.add(cube);
+    return cube;
 }
 
 function applyMeshSettings(model){
