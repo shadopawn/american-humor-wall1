@@ -278,7 +278,8 @@ function onMouseMove(event){
 function setMouseCursorStyle(event){
     // possibly update only if mouse position has sufficient delta
     if(event){
-        if(isModelIntersected(event)){
+
+        if(getRayIntersections(event).length > 0){
             document.body.style.cursor = "pointer";
         }
         else
@@ -299,20 +300,8 @@ function onMouseClick(event){
     }
 }
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
 function getIntersectedModel(event){
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-    // update the picking ray with the camera and mouse position
-	raycaster.setFromCamera(mouse, camera);
-
-    let collisionMeshList = modelList.map(item => item.collisionMesh);
-
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(collisionMeshList, true);
+	const intersects = getRayIntersections(event);
     
     let intersectedModel;
     if (intersects.length > 0){
@@ -326,7 +315,10 @@ function getIntersectedModel(event){
     return intersectedModel;
 }
 
-function isModelIntersected(event){
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function getRayIntersections(event){
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
@@ -338,7 +330,7 @@ function isModelIntersected(event){
 	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
-    return (intersects.length > 0);
+    return intersects;
 }
 
 async function selectModel(model){
