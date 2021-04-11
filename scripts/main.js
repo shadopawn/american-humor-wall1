@@ -95,13 +95,14 @@ function addKennedyAwardModel(){
         model.rotation.x = -0.2;
         applyMeshSettings(model);
 
-        addKennedyCollisionMesh(model);
-        
+        let kennedyCollisionMesh = addKennedyCollisionMesh(model);
+
         scene.add(kennedyAwardModel);
 
         modelList.push({
             model: kennedyAwardModel,
-            originalPosition: kennedyAwardModel.position.clone()
+            originalPosition: kennedyAwardModel.position.clone(),
+            collisionMesh: kennedyCollisionMesh
         });
     }, undefined, function (error) {
         console.error(error);
@@ -112,7 +113,7 @@ function addKennedyCollisionMesh(model){
     let boundingBoxSize = getBoundingBoxSize(model);
 
     const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y);
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
     const plane = new THREE.Mesh(geometry, material);
     plane.position.set(25, 160, -20);
     model.add(plane);
@@ -130,13 +131,14 @@ function addPeabodyAwardModel(){
         model = gltf.scene.children[0];
         applyMeshSettings(model);
 
-        addPeabodyCollisionMesh(model);
+        let peabodyCollisionMesh = addPeabodyCollisionMesh(model);
 
         scene.add(peabodyAwardModel);
 
         modelList.push({
             model: peabodyAwardModel,
-            originalPosition: peabodyAwardModel.position.clone()
+            originalPosition: peabodyAwardModel.position.clone(),
+            collisionMesh: peabodyCollisionMesh
         });
     }, undefined, function (error) {
         console.error(error);
@@ -148,7 +150,7 @@ function addPeabodyCollisionMesh(model){
 
     let radius = boundingBoxSize.x/2
     const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
     const cylinder = new THREE.Mesh(geometry, material);
     cylinder.rotation.x = Math.PI/2;
     model.add(cylinder);
@@ -169,13 +171,14 @@ function addMarkTwainAwardModel(){
         model.position.y = -4;
         applyMeshSettings(model);
 
-        addMarkTwainCollisionMesh(model);
+        let markTwainCollisionMesh = addMarkTwainCollisionMesh(model);
 
         scene.add(markTwainAwardModel);
 
         modelList.push({
             model: markTwainAwardModel,
-            originalPosition: markTwainAwardModel.position.clone()
+            originalPosition: markTwainAwardModel.position.clone(),
+            collisionMesh: markTwainCollisionMesh
         });
     }, undefined, function (error) {
         console.error(error);
@@ -186,7 +189,7 @@ function addMarkTwainCollisionMesh(model){
     let boundingBoxSize = getBoundingBoxSize(model);
 
     const geometry = new THREE.BoxGeometry(boundingBoxSize.x, boundingBoxSize.y, boundingBoxSize.z);
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0.5, transparent: true});
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
     const cube = new THREE.Mesh(geometry, material);
     cube.rotation.x = Math.PI/2;
     cube.position.set(-0.5, 2, 4.2);
@@ -266,7 +269,7 @@ var getScrollSpeed = (function(settings){
 })();
 
 let mouseMoveEvent;
-//window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("mousemove", onMouseMove);
 function onMouseMove(event){
     event.preventDefault();
     mouseMoveEvent = event;
@@ -306,15 +309,17 @@ function getIntersectedModel(event){
     // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera(mouse, camera);
 
+    let collisionMeshList = modelList.map(item => item.collisionMesh);
+
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
     let intersectedModel;
     if (intersects.length > 0){
         let intersectedObject = intersects[0].object;
-        intersectedObject.traverseAncestors(parentObject => {
-            if (modelList.some(element => element.model == parentObject)){
-                intersectedModel = parentObject;
+        modelList.forEach(({model, collisionMesh}) =>{
+            if (collisionMesh == intersectedObject){
+                intersectedModel = model;
             }
         });
     }
@@ -328,8 +333,10 @@ function isModelIntersected(event){
     // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera(mouse, camera);
 
+    let collisionMeshList = modelList.map(item => item.collisionMesh);
+
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
     return (intersects.length > 0);
 }
@@ -540,7 +547,7 @@ function animate() {
 
     applyAngularVelocity();
 
-    //setMouseCursorStyle(mouseMoveEvent);
+    setMouseCursorStyle(mouseMoveEvent);
     
     renderer.render(scene, camera);
 }
