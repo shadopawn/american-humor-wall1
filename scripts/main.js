@@ -109,11 +109,14 @@ function addKennedyAwardModel(){
 }
 
 function addKennedyCollisionMesh(model){
-    const geometry = new THREE.PlaneGeometry(1800, 2000, 1);
+    let boundingBox = new THREE.Box3().setFromObject(model);
+    let boundingBoxSize = new THREE.Vector3();
+    boundingBox.getSize(boundingBoxSize);
+
+    const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y, 1);
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 1, transparent: true,});
     const plane = new THREE.Mesh(geometry, material);
-    plane.position.y = 160;
-    plane.position.x = 25;
+    plane.position.set(25, 160, -20);
     model.add(plane);
     return plane;
 }
