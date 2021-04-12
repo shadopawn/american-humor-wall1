@@ -278,8 +278,8 @@ function onMouseMove(event){
 function setMouseCursorStyle(event){
     // possibly update only if mouse position has sufficient delta
     if(event){
-
-        if(getRayIntersections(event).length > 0){
+        let intersectedModel = getIntersectedModel(event)
+        if(intersectedModel != selectedModel && intersectedModel != null){
             document.body.style.cursor = "pointer";
         }
         else
