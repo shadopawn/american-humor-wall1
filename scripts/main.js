@@ -79,8 +79,7 @@ const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
 // based on model load time the modelList order isn't always consistent
-// modelList contains objects with the model and originalPosition
-// Possibly add collision meshes to improve raycast performance
+// modelList contains objects with the model, originalPosition and collisionMesh
 let modelList = [];
 
 function addKennedyAwardModel(){
@@ -94,13 +93,30 @@ function addKennedyAwardModel(){
         model.position.z = 0;
         model.rotation.x = -0.2;
         applyMeshSettings(model);
-        
+
+        let kennedyCollisionMesh = addKennedyCollisionMesh(model);
+
         scene.add(kennedyAwardModel);
 
-        modelList.push({model: kennedyAwardModel, originalPosition: kennedyAwardModel.position.clone()});
+        modelList.push({
+            model: kennedyAwardModel,
+            originalPosition: kennedyAwardModel.position.clone(),
+            collisionMesh: kennedyCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addKennedyCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const plane = new THREE.Mesh(geometry, material);
+    plane.position.set(25, 160, -20);
+    model.add(plane);
+    return plane;
 }
 
 function addPeabodyAwardModel(){
@@ -114,12 +130,30 @@ function addPeabodyAwardModel(){
         model = gltf.scene.children[0];
         applyMeshSettings(model);
 
+        let peabodyCollisionMesh = addPeabodyCollisionMesh(model);
+
         scene.add(peabodyAwardModel);
 
-        modelList.push({model: peabodyAwardModel, originalPosition: peabodyAwardModel.position.clone()});
+        modelList.push({
+            model: peabodyAwardModel,
+            originalPosition: peabodyAwardModel.position.clone(),
+            collisionMesh: peabodyCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addPeabodyCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    let radius = boundingBoxSize.x/2
+    const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.rotation.x = Math.PI/2;
+    model.add(cylinder);
+    return cylinder;
 }
 
 function addMarkTwainAwardModel(){
@@ -136,12 +170,30 @@ function addMarkTwainAwardModel(){
         model.position.y = -4;
         applyMeshSettings(model);
 
+        let markTwainCollisionMesh = addMarkTwainCollisionMesh(model);
+
         scene.add(markTwainAwardModel);
 
-        modelList.push({model: markTwainAwardModel, originalPosition: markTwainAwardModel.position.clone()});
+        modelList.push({
+            model: markTwainAwardModel,
+            originalPosition: markTwainAwardModel.position.clone(),
+            collisionMesh: markTwainCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addMarkTwainCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    const geometry = new THREE.BoxGeometry(boundingBoxSize.x, boundingBoxSize.y, boundingBoxSize.z);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const cube = new THREE.Mesh(geometry, material);
+    cube.rotation.x = Math.PI/2;
+    cube.position.set(-0.5, 2, 4.2);
+    model.add(cube);
+    return cube;
 }
 
 function applyMeshSettings(model){
@@ -155,6 +207,12 @@ function applyMeshSettings(model){
     });
 }
 
+function getBoundingBoxSize(model){
+    let boundingBox = new THREE.Box3().setFromObject(model);
+    let boundingBoxSize = new THREE.Vector3();
+    boundingBox.getSize(boundingBoxSize);
+    return boundingBoxSize;
+}
 
 window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -210,7 +268,7 @@ var getScrollSpeed = (function(settings){
 })();
 
 let mouseMoveEvent;
-//window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("mousemove", onMouseMove);
 function onMouseMove(event){
     event.preventDefault();
     mouseMoveEvent = event;
@@ -219,7 +277,8 @@ function onMouseMove(event){
 function setMouseCursorStyle(event){
     // possibly update only if mouse position has sufficient delta
     if(event){
-        if(isModelIntersected(event)){
+        let intersectedModel = getIntersectedModel(event)
+        if(intersectedModel != selectedModel && intersectedModel != null){
             document.body.style.cursor = "pointer";
         }
         else
@@ -240,42 +299,37 @@ function onMouseClick(event){
     }
 }
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
 function getIntersectedModel(event){
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-    // update the picking ray with the camera and mouse position
-	raycaster.setFromCamera(mouse, camera);
-
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = getRayIntersections(event);
     
     let intersectedModel;
     if (intersects.length > 0){
         let intersectedObject = intersects[0].object;
-        intersectedObject.traverseAncestors(parentObject => {
-            if (modelList.some(element => element.model == parentObject)){
-                intersectedModel = parentObject;
+        modelList.forEach(({model, collisionMesh}) =>{
+            if (collisionMesh == intersectedObject){
+                intersectedModel = model;
             }
         });
     }
     return intersectedModel;
 }
 
-function isModelIntersected(event){
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function getRayIntersections(event){
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
     // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera(mouse, camera);
 
+    let collisionMeshList = modelList.map(item => item.collisionMesh);
+
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
-    return (intersects.length > 0);
+    return intersects;
 }
 
 async function selectModel(model){
@@ -484,7 +538,7 @@ function animate() {
 
     applyAngularVelocity();
 
-    //setMouseCursorStyle(mouseMoveEvent);
+    setMouseCursorStyle(mouseMoveEvent);
     
     renderer.render(scene, camera);
 }
