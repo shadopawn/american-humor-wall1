@@ -396,7 +396,7 @@ function moveModelsToSelectionPositions(selectedModel){
     moveModelsToCorner(selectedModel);
 }
 
-const cornerModelSpacing = -25;
+const cornerModelSpacing = -18;
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
@@ -426,8 +426,8 @@ function updateCornerPosition(){
 }
 
 function getCornerVector(){
-    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
-    let corner2D = new THREE.Vector2(0.875, 0.85); // NDC (Normalized Device Coordinate) of the corner position
+    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -200));
+    let corner2D = new THREE.Vector2(0.91, 0.85); // NDC (Normalized Device Coordinate) of the corner position
     let cornerPoint = new THREE.Vector3();
 
     raycaster.setFromCamera(corner2D, camera);
