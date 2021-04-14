@@ -438,8 +438,6 @@ function getCornerVector(){
 function moveModelToCenter(modelToAnimate){
     const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
-    let forwardYRotation = getNearestForwardRotation(modelToAnimate);
-    animateModelToYRotation(modelToAnimate, forwardYRotation);
 }
 
 function moveModelToPosition(modelToAnimate, position){
