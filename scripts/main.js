@@ -246,7 +246,7 @@ var getScrollSpeed = (function(settings){
     settings = settings || {};
 
     var lastPos, newPos, timer, delta, 
-        delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
+        delay = settings.delay || 50; // in "ms" (higher means lower fidelity)
 
     function clear() {
       lastPos = null;
@@ -506,7 +506,7 @@ function modelsToOriginalPositionOnScroll(){
 }
 
 function rotateModelToForwardOnScroll(scrollDuration){
-    let rotationScenes = []
+    let rotationScenes = [];
 
     modelList.forEach(({model}) =>{
         let rotationScene = new ScrollMagic.Scene({
