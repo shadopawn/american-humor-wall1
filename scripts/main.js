@@ -228,8 +228,10 @@ window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/2000;
 }
 
+let modelRotationEnabled = true;
+
 function applyAngularVelocity(){
-    if(selectedModel){
+    if(selectedModel && modelRotationEnabled){
         selectedModel.rotation.y += angularVelocity;
     }
 
@@ -240,6 +242,14 @@ function applyAngularVelocity(){
     {
         angularVelocity = 0;
     }
+}
+
+function toggleModelRotation(){
+    modelRotationEnabled = !modelRotationEnabled;
+}
+
+function enableModelRotation(){
+    modelRotationEnabled = true;
 }
 
 var getScrollSpeed = (function(settings){
@@ -351,13 +361,10 @@ async function selectModel(model){
 }
 
 function onModelSelected(model){
-
+    enableModelRotation();
     moveModelsToSelectionPositions(model);
-
     addMoveModelToTheSideController(model);
-
     modelsToOriginalPositionOnScroll();
-
     fadeOutStartingText();
 }
 
@@ -487,6 +494,10 @@ function addMoveModelToTheSideController(selectedModel){
     })
         .setTween(moveToSideTimeLine)
         .addTo(moveToSideController);
+
+    moveToSideScene.on("start", (event) => {
+        toggleModelRotation();
+    });
 }
 
 let moveToOriginalPositionController;
