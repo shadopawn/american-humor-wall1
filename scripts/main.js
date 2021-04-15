@@ -345,13 +345,20 @@ async function selectModel(model){
 
     await loadHtmlForModel(selectedModel);
 
-    moveModelsToSelectionPositions(selectedModel);
+    onModelSelected(selectedModel);
 
-    addMoveModelToTheSideController(selectedModel);
+    window.scrollTo(0, 0);
+}
+
+function onModelSelected(model){
+
+    moveModelsToSelectionPositions(model);
+
+    addMoveModelToTheSideController(model);
 
     modelsToOriginalPositionOnScroll();
 
-    window.scrollTo(0, 0);
+    fadeOutStartingText();
 }
 
 async function loadHtmlForModel(model){
