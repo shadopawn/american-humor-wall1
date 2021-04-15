@@ -345,7 +345,6 @@ function getRayIntersections(event){
 async function selectModel(model){
 
     modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
-    //console.log(modelList);
 
     if (model == selectedModel){
         return;
@@ -476,28 +475,50 @@ function getNearestForwardRotation(model){
     }
 }
 
-let moveToSideScene;
+let moveToSideController;
 
 function addMoveModelToTheSideController(selectedModel){
-    if(moveToSideScene)
-        moveToSideScene.destroy();
+    if(moveToSideController)
+        moveToSideController.destroy();
 
-    let moveToSideController = new ScrollMagic.Controller();
+    moveToSideController = new ScrollMagic.Controller();
 
     let moveToSideTimeLine = new TimelineMax();
     moveToSideTimeLine.to(selectedModel.position, 1, {x: -20});
 
-    moveToSideScene = new ScrollMagic.Scene({
-        triggerElement: ".right-side",
-        duration: 800,
-        triggerHook: 0.9
+    let triggerElement = ".right-side";
+    let duration = 800;
+    let triggerHook = 0.9;
+
+    let moveToSideScene = new ScrollMagic.Scene({
+        triggerElement,
+        duration,
+        triggerHook
     })
         .setTween(moveToSideTimeLine)
         .addTo(moveToSideController);
 
     moveToSideScene.on("start", (event) => {
         toggleModelRotation();
+        rotateForwardDuringMoveToSide();
     });
+
+    let rotateForwardScene;
+
+    function rotateForwardDuringMoveToSide(){
+        if (rotateForwardScene)
+            rotateForwardScene.destroy();
+
+        let forwardYRotation = getNearestForwardRotation(selectedModel);
+        forwardYRotation += 0.4
+        rotateForwardScene = new ScrollMagic.Scene({
+            triggerElement,
+            duration,
+            triggerHook
+        })
+            .setTween(selectedModel.rotation, 1, {y: forwardYRotation})
+            .addTo(moveToSideController);
+    }
 }
 
 let moveToOriginalPositionController;
