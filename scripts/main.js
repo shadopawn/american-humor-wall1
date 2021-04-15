@@ -388,6 +388,7 @@ function onHtmlLoaded(){
     addAllOrbitAnimations();
     addBottomSpacer();
     setupCarousel();
+    fadeInStartingTextOnScroll();
 }
 
 function addBottomSpacer(){
