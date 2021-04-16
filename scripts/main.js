@@ -79,8 +79,7 @@ const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
 // based on model load time the modelList order isn't always consistent
-// modelList contains objects with the model and originalPosition
-// Possibly add collision meshes to improve raycast performance
+// modelList contains objects with the model, originalPosition and collisionMesh
 let modelList = [];
 
 function addKennedyAwardModel(){
@@ -94,13 +93,30 @@ function addKennedyAwardModel(){
         model.position.z = 0;
         model.rotation.x = -0.2;
         applyMeshSettings(model);
-        
+
+        let kennedyCollisionMesh = addKennedyCollisionMesh(model);
+
         scene.add(kennedyAwardModel);
 
-        modelList.push({model: kennedyAwardModel, originalPosition: kennedyAwardModel.position.clone()});
+        modelList.push({
+            model: kennedyAwardModel,
+            originalPosition: kennedyAwardModel.position.clone(),
+            collisionMesh: kennedyCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addKennedyCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    const geometry = new THREE.PlaneGeometry(boundingBoxSize.x, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const plane = new THREE.Mesh(geometry, material);
+    plane.position.set(25, 160, -20);
+    model.add(plane);
+    return plane;
 }
 
 function addPeabodyAwardModel(){
@@ -114,12 +130,30 @@ function addPeabodyAwardModel(){
         model = gltf.scene.children[0];
         applyMeshSettings(model);
 
+        let peabodyCollisionMesh = addPeabodyCollisionMesh(model);
+
         scene.add(peabodyAwardModel);
 
-        modelList.push({model: peabodyAwardModel, originalPosition: peabodyAwardModel.position.clone()});
+        modelList.push({
+            model: peabodyAwardModel,
+            originalPosition: peabodyAwardModel.position.clone(),
+            collisionMesh: peabodyCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addPeabodyCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    let radius = boundingBoxSize.x/2
+    const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.rotation.x = Math.PI/2;
+    model.add(cylinder);
+    return cylinder;
 }
 
 function addMarkTwainAwardModel(){
@@ -136,12 +170,30 @@ function addMarkTwainAwardModel(){
         model.position.y = -4;
         applyMeshSettings(model);
 
+        let markTwainCollisionMesh = addMarkTwainCollisionMesh(model);
+
         scene.add(markTwainAwardModel);
 
-        modelList.push({model: markTwainAwardModel, originalPosition: markTwainAwardModel.position.clone()});
+        modelList.push({
+            model: markTwainAwardModel,
+            originalPosition: markTwainAwardModel.position.clone(),
+            collisionMesh: markTwainCollisionMesh
+        });
     }, undefined, function (error) {
         console.error(error);
     });
+}
+
+function addMarkTwainCollisionMesh(model){
+    let boundingBoxSize = getBoundingBoxSize(model);
+
+    const geometry = new THREE.BoxGeometry(boundingBoxSize.x, boundingBoxSize.y, boundingBoxSize.z);
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
+    const cube = new THREE.Mesh(geometry, material);
+    cube.rotation.x = Math.PI/2;
+    cube.position.set(-0.5, 2, 4.2);
+    model.add(cube);
+    return cube;
 }
 
 function applyMeshSettings(model){
@@ -155,6 +207,12 @@ function applyMeshSettings(model){
     });
 }
 
+function getBoundingBoxSize(model){
+    let boundingBox = new THREE.Box3().setFromObject(model);
+    let boundingBoxSize = new THREE.Vector3();
+    boundingBox.getSize(boundingBoxSize);
+    return boundingBoxSize;
+}
 
 window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -170,8 +228,10 @@ window.onscroll = function (e) {
     angularVelocity = getScrollSpeed()/2000;
 }
 
+let modelRotationEnabled = true;
+
 function applyAngularVelocity(){
-    if(selectedModel){
+    if(selectedModel && modelRotationEnabled){
         selectedModel.rotation.y += angularVelocity;
     }
 
@@ -184,11 +244,19 @@ function applyAngularVelocity(){
     }
 }
 
+function toggleModelRotation(){
+    modelRotationEnabled = !modelRotationEnabled;
+}
+
+function enableModelRotation(){
+    modelRotationEnabled = true;
+}
+
 var getScrollSpeed = (function(settings){
     settings = settings || {};
 
     var lastPos, newPos, timer, delta, 
-        delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
+        delay = settings.delay || 50; // in "ms" (higher means lower fidelity)
 
     function clear() {
       lastPos = null;
@@ -210,7 +278,7 @@ var getScrollSpeed = (function(settings){
 })();
 
 let mouseMoveEvent;
-//window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("mousemove", onMouseMove);
 function onMouseMove(event){
     event.preventDefault();
     mouseMoveEvent = event;
@@ -219,7 +287,8 @@ function onMouseMove(event){
 function setMouseCursorStyle(event){
     // possibly update only if mouse position has sufficient delta
     if(event){
-        if(isModelIntersected(event)){
+        let intersectedModel = getIntersectedModel(event)
+        if(intersectedModel != selectedModel && intersectedModel != null){
             document.body.style.cursor = "pointer";
         }
         else
@@ -240,48 +309,42 @@ function onMouseClick(event){
     }
 }
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
 function getIntersectedModel(event){
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-    // update the picking ray with the camera and mouse position
-	raycaster.setFromCamera(mouse, camera);
-
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = getRayIntersections(event);
     
     let intersectedModel;
     if (intersects.length > 0){
         let intersectedObject = intersects[0].object;
-        intersectedObject.traverseAncestors(parentObject => {
-            if (modelList.some(element => element.model == parentObject)){
-                intersectedModel = parentObject;
+        modelList.forEach(({model, collisionMesh}) =>{
+            if (collisionMesh == intersectedObject){
+                intersectedModel = model;
             }
         });
     }
     return intersectedModel;
 }
 
-function isModelIntersected(event){
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function getRayIntersections(event){
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
     // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera(mouse, camera);
 
+    let collisionMeshList = modelList.map(item => item.collisionMesh);
+
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children, true);
+	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
-    return (intersects.length > 0);
+    return intersects;
 }
 
 async function selectModel(model){
 
     modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
-    //console.log(modelList);
 
     if (model == selectedModel){
         return;
@@ -291,13 +354,17 @@ async function selectModel(model){
 
     await loadHtmlForModel(selectedModel);
 
-    moveModelsToSelectionPositions(selectedModel);
-
-    addMoveModelToTheSideController(selectedModel);
-
-    modelsToOriginalPositionOnScroll();
+    onModelSelected(selectedModel);
 
     window.scrollTo(0, 0);
+}
+
+function onModelSelected(model){
+    enableModelRotation();
+    moveModelsToSelectionPositions(model);
+    addMoveModelToTheSideController(model);
+    modelsToOriginalPositionOnScroll();
+    fadeOutStartingText();
 }
 
 async function loadHtmlForModel(model){
@@ -327,6 +394,7 @@ function onHtmlLoaded(){
     addAllOrbitAnimations();
     addBottomSpacer();
     setupCarousel();
+    fadeInStartingTextOnScroll();
 }
 
 function addBottomSpacer(){
@@ -342,7 +410,7 @@ function moveModelsToSelectionPositions(selectedModel){
     moveModelsToCorner(selectedModel);
 }
 
-const cornerModelSpacing = -25;
+const cornerModelSpacing = -18;
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
@@ -372,8 +440,8 @@ function updateCornerPosition(){
 }
 
 function getCornerVector(){
-    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -380));
-    let corner2D = new THREE.Vector2(0.875, 0.85); // NDC (Normalized Device Coordinate) of the corner position
+    let plane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -200));
+    let corner2D = new THREE.Vector2(0.91, 0.85); // NDC (Normalized Device Coordinate) of the corner position
     let cornerPoint = new THREE.Vector3();
 
     raycaster.setFromCamera(corner2D, camera);
@@ -384,8 +452,6 @@ function getCornerVector(){
 function moveModelToCenter(modelToAnimate){
     const centerPosition = new THREE.Vector3(0, 2, 10);
     moveModelToPosition(modelToAnimate, centerPosition);
-    let forwardYRotation = getNearestForwardRotation(modelToAnimate);
-    animateModelToYRotation(modelToAnimate, forwardYRotation);
 }
 
 function moveModelToPosition(modelToAnimate, position){
@@ -409,24 +475,50 @@ function getNearestForwardRotation(model){
     }
 }
 
-let moveToSideScene;
+let moveToSideController;
 
 function addMoveModelToTheSideController(selectedModel){
-    if(moveToSideScene)
-        moveToSideScene.destroy();
+    if(moveToSideController)
+        moveToSideController.destroy();
 
-    let moveToSideController = new ScrollMagic.Controller();
+    moveToSideController = new ScrollMagic.Controller();
 
     let moveToSideTimeLine = new TimelineMax();
     moveToSideTimeLine.to(selectedModel.position, 1, {x: -20});
 
-    moveToSideScene = new ScrollMagic.Scene({
-        triggerElement: ".right-side",
-        duration: 800,
-        triggerHook: 0.9
+    let triggerElement = ".right-side";
+    let duration = 800;
+    let triggerHook = 0.9;
+
+    let moveToSideScene = new ScrollMagic.Scene({
+        triggerElement,
+        duration,
+        triggerHook
     })
         .setTween(moveToSideTimeLine)
         .addTo(moveToSideController);
+
+    moveToSideScene.on("start", (event) => {
+        toggleModelRotation();
+        rotateForwardDuringMoveToSide();
+    });
+
+    let rotateForwardScene;
+
+    function rotateForwardDuringMoveToSide(){
+        if (rotateForwardScene)
+            rotateForwardScene.destroy();
+
+        let forwardYRotation = getNearestForwardRotation(selectedModel);
+        forwardYRotation += 0.4
+        rotateForwardScene = new ScrollMagic.Scene({
+            triggerElement,
+            duration,
+            triggerHook
+        })
+            .setTween(selectedModel.rotation, 1, {y: forwardYRotation})
+            .addTo(moveToSideController);
+    }
 }
 
 let moveToOriginalPositionController;
@@ -454,7 +546,7 @@ function modelsToOriginalPositionOnScroll(){
 }
 
 function rotateModelToForwardOnScroll(scrollDuration){
-    let rotationScenes = []
+    let rotationScenes = [];
 
     modelList.forEach(({model}) =>{
         let rotationScene = new ScrollMagic.Scene({
@@ -484,7 +576,7 @@ function animate() {
 
     applyAngularVelocity();
 
-    //setMouseCursorStyle(mouseMoveEvent);
+    setMouseCursorStyle(mouseMoveEvent);
     
     renderer.render(scene, camera);
 }
