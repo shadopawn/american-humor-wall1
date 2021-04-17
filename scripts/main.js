@@ -370,15 +370,12 @@ function onModelSelected(model){
 
 async function loadHtmlForModel(model){
     if (model == kennedyAwardModel){
-        console.log("Kennedy award selected");
         await loadHtmlFromFile("kennedyAward.html");
     }
     else if (model == peabodyAwardModel){
-        console.log("Peabody award selected");
         await loadHtmlFromFile("peabodyAward.html");
     }
     else if (model == markTwainAwardModel){
-        console.log("Mark Twain award selected");
         await loadHtmlFromFile("markTwainAward.html");
     }
 }
