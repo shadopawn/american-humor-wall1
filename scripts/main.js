@@ -499,7 +499,7 @@ function addMoveModelToTheSideController(selectedModel){
         .setTween(moveToSideTimeLine)
         .addTo(moveToSideController);
 
-    moveToSideScene.on("start", (event) => {
+    moveToSideScene.on("start", () => {
         toggleModelRotation();
         rotateForwardDuringMoveToSide();
     });
@@ -564,7 +564,7 @@ function rotateModelToForwardOnScroll(scrollDuration){
     });
 
     rotationScenes.forEach(({scene, sceneModel}) =>{
-        scene.on("start", (event) => {
+        scene.on("start", () => {
             let forwardYRotation = getNearestForwardRotation(sceneModel);
             scene.setTween(sceneModel.rotation, 1, {y: forwardYRotation});
         });
