@@ -344,6 +344,7 @@ function getRayIntersections(event){
 
 async function selectModel(model){
 
+    // sort models based on starting x position
     modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
 
     if (model == selectedModel){
