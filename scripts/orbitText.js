@@ -9,7 +9,8 @@ function addAllOrbitAnimations(){
     let currentPosition = firstOrbitTextOffset;
     orbitTexts.forEach(orbitText => {
         addOrbitAnimations(orbitText, currentPosition);
-        currentPosition += (staticDistance + 2*rotateInOutDuration + spaceBetweenOrbitTexts);
+        let distanceToNextStart = (staticDistance + 2*rotateInOutDuration + spaceBetweenOrbitTexts);
+        currentPosition += distanceToNextStart;
     });
     
     const totalOrbitTextDistance = currentPosition;

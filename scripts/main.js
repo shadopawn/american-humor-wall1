@@ -224,7 +224,7 @@ window.addEventListener("resize", () => {
 
 let angularVelocity = 0;
 
-window.onscroll = function (e) {
+window.onscroll = () =>{
     angularVelocity = getScrollSpeed()/2000;
 }
 
