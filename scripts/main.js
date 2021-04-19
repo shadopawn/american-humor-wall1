@@ -329,20 +329,16 @@ function getRayIntersections(event){
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-    // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera(mouse, camera);
 
     let collisionMeshList = modelList.map(item => item.collisionMesh);
 
-	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects(collisionMeshList, true);
     
     return intersects;
 }
 
 async function selectModel(model){
-
-    // sort models based on starting x position
     modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
 
     if (model == selectedModel){
