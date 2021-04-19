@@ -253,22 +253,22 @@ function enableModelRotation(){
 }
 
 let getScrollSpeed = function(){
-    let lastPos, newPos, timer, delta;
+    let lastPosition, newPosition, timer, delta;
     delay = 50; // in "ms" (higher means lower fidelity)
 
     function clear() {
-        lastPos = null;
+        lastPosition = null;
         delta = 0;
     }
 
     clear();
 
     return () =>{
-        newPos = window.scrollY;
-        if (lastPos != null){ 
-            delta = newPos - lastPos;
+        newPosition = window.scrollY;
+        if (lastPosition != null){ 
+            delta = newPosition - lastPosition;
         }
-        lastPos = newPos;
+        lastPosition = newPosition;
         clearTimeout(timer);
         timer = setTimeout(clear, delay);
         return delta;
