@@ -496,6 +496,10 @@ function addMoveModelToTheSideController(selectedModel){
 
     moveToSideScene.on("start", () => {
         toggleModelRotation();
+        
+        // The rotation animation is added on start because the model rotation
+        // can be inconsistent and the animation target needs to be calculated
+        // based on the model's current rotation
         rotateForwardDuringMoveToSide();
     });
 
