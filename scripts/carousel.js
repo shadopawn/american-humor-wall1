@@ -4,10 +4,9 @@ let nextName;
 let previousName;
 
 function setupCarousel(){
-
     let carousel = document.querySelector(".carousel");
 
-    if(!carousel){
+    if(carousel == null){
         return;
     }
 
@@ -21,10 +20,14 @@ function setupCarousel(){
 
     previousName = addParagraphElement(".flickity-prev-next-button.previous", "previous-carousel-name");
 
-    setPreviousNextNames(0);
+    initializeNames();
     flickity.on('change', index => {
         setPreviousNextNames(index);
     });
+}
+
+function initializeNames(){
+    setPreviousNextNames(0);
 }
 
 function setPreviousNextNames(index){
@@ -34,14 +37,17 @@ function setPreviousNextNames(index){
 
 function setNextName(index) {
     let nextCell = getNextCell(index);
-    let nextCellName = nextCell.querySelector(".carousel-name");
-    nextName.innerText = nextCellName.innerText;
+    setElementNameFromCell(nextName, nextCell);
 }
 
 function setPreviousName(index) {
     let previousCell = getPreviousCell(index);
-    let previousCellName = previousCell.querySelector(".carousel-name");
-    previousName.innerText = previousCellName.innerText;
+    setElementNameFromCell(previousName, previousCell);
+}
+
+function setElementNameFromCell(elementToSetNameOf, cellElement){
+    let cellName = cellElement.querySelector(".carousel-name");
+    elementToSetNameOf.innerText = cellName.innerText;
 }
 
 function addParagraphElement(parentSelector, className){
