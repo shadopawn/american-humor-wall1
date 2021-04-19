@@ -147,7 +147,7 @@ function addPeabodyAwardModel(){
 function addPeabodyCollisionMesh(model){
     let boundingBoxSize = getBoundingBoxSize(model);
 
-    let radius = boundingBoxSize.x/2
+    let radius = boundingBoxSize.x/2;
     const geometry = new THREE.CylinderGeometry(radius, radius, boundingBoxSize.y);
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide, opacity: 0, transparent: true});
     const cylinder = new THREE.Mesh(geometry, material);
