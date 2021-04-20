@@ -1,6 +1,6 @@
 let scene, camera, renderer;
 
-function init() {
+function initialize() {
     scene = new THREE.Scene();
 
     setupCamera();
@@ -577,5 +577,5 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-init();
+initialize();
 animate();
