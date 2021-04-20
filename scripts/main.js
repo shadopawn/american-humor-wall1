@@ -60,19 +60,20 @@ function setupLighting(){
 
     const directionalLight = new THREE.DirectionalLight(0xe2f3ff, 2);
     directionalLight.position.set(-50, 50, 30);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.bias = -0.0001;
-    directionalLight.shadow.mapSize.width = 1024*4;
-    directionalLight.shadow.mapSize.height = 1024*4;
+    applyLightSettings(directionalLight);
     scene.add(directionalLight);
 
     const spotLight = new THREE.SpotLight(0xffffff, 1);
     spotLight.position.set(80, 15, 30);
-    spotLight.castShadow = true;
-    spotLight.shadow.bias = -0.0001;
-    spotLight.shadow.mapSize.width = 1024*4;
-    spotLight.shadow.mapSize.height = 1024*4;
+    applyLightSettings(spotLight);
     scene.add(spotLight);
+}
+
+function applyLightSettings(light){
+    light.castShadow = true;
+    light.shadow.bias = -0.0001;
+    light.shadow.mapSize.width = 1024*4;
+    light.shadow.mapSize.height = 1024*4;
 }
 
 const loader = new THREE.GLTFLoader();
