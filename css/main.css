@@ -110,6 +110,10 @@ canvas {
     font-size: 3em;
 }
 
+.smaller-heading{
+    font-size: 2.5em;
+}
+
 .side-by-side{
     display: flex;
 }
