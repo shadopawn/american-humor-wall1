@@ -20,28 +20,34 @@ function addAllOrbitAnimations(){
 const orbitTextController = new ScrollMagic.Controller();
 
 function addOrbitAnimations(element, start){
-    //Add animation to rotate in
-    let rotateInTimeLine = new TimelineMax();
-    rotateInTimeLine.to(element, 4, {x: 0, rotationY: 0, opacity: 3});
+    addRotateInAnimation(element, start);
 
-    new ScrollMagic.Scene({
-        duration: rotateInOutDuration, 
-        offset: start
-    })
-        .setTween(rotateInTimeLine)
-        .addTo(orbitTextController);
+    const distanceToNextAnimation = staticDistance + rotateInOutDuration;
+    const rotateOut = start + distanceToNextAnimation;
+    
+    addRotateOutAnimation(element, rotateOut);
+}
 
-
-    //Add animation to rotate out
+function addRotateOutAnimation(element, start) {
     let rotateOutTimeLine = new TimelineMax();
-    rotateOutTimeLine.to(element, 4, {x: 400, rotationY: 70, opacity: 0});
-
-    const rotateOut = start + staticDistance + rotateInOutDuration;
+    rotateOutTimeLine.to(element, 4, { x: 400, rotationY: 70, opacity: 0 });
 
     new ScrollMagic.Scene({
         duration: rotateInOutDuration,
-        offset: rotateOut
+        offset: start
     })
         .setTween(rotateOutTimeLine)
+        .addTo(orbitTextController);
+}
+
+function addRotateInAnimation(element, start) {
+    let rotateInTimeLine = new TimelineMax();
+    rotateInTimeLine.to(element, 4, { x: 0, rotationY: 0, opacity: 3 });
+
+    new ScrollMagic.Scene({
+        duration: rotateInOutDuration,
+        offset: start
+    })
+        .setTween(rotateInTimeLine)
         .addTo(orbitTextController);
 }
