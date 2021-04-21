@@ -1,3 +1,4 @@
+// flickity is a draggable carousel library https://flickity.metafizzy.co/
 let flickity;
 
 let nextName;
@@ -10,20 +11,36 @@ function setupCarousel(){
         return;
     }
 
-    flickity = new Flickity(carousel, {
+    createFlickity(carousel);
+
+    initializeFlickity();
+}
+
+function createFlickity(element){
+    flickity = new Flickity(element, {
         wrapAround : true,
         pageDots: false,
         imagesLoaded: true
     });
+}
 
-    nextName = addParagraphElement(".flickity-prev-next-button.next", "next-carousel-name");
+function initializeFlickity(){
+    addNextNameParagraphElement();
 
-    previousName = addParagraphElement(".flickity-prev-next-button.previous", "previous-carousel-name");
+    addPreviousNameParagraphElement();
 
     initializeNames();
     flickity.on('change', index => {
         setPreviousNextNames(index);
     });
+}
+
+function addNextNameParagraphElement(){
+    nextName = addParagraphElement(".flickity-prev-next-button.next", "next-carousel-name");
+}
+
+function addPreviousNameParagraphElement(){
+    previousName = addParagraphElement(".flickity-prev-next-button.previous", "previous-carousel-name");
 }
 
 function initializeNames(){
