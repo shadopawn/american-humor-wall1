@@ -9,7 +9,7 @@ function addAllOrbitAnimations(){
     let currentPosition = firstOrbitTextOffset;
     orbitTexts.forEach(orbitText => {
         addOrbitAnimations(orbitText, currentPosition);
-        let distanceToNextStart = (staticDistance + 2*rotateInOutDuration + spaceBetweenOrbitTexts);
+        let distanceToNextStart = staticDistance + 2*rotateInOutDuration + spaceBetweenOrbitTexts;
         currentPosition += distanceToNextStart;
     });
     
@@ -23,31 +23,30 @@ function addOrbitAnimations(element, start){
     addRotateInAnimation(element, start);
 
     const distanceToNextAnimation = staticDistance + rotateInOutDuration;
-    const rotateOut = start + distanceToNextAnimation;
-    
-    addRotateOutAnimation(element, rotateOut);
-}
-
-function addRotateOutAnimation(element, start) {
-    let rotateOutTimeLine = new TimelineMax();
-    rotateOutTimeLine.to(element, 4, { x: 400, rotationY: 70, opacity: 0 });
-
-    new ScrollMagic.Scene({
-        duration: rotateInOutDuration,
-        offset: start
-    })
-        .setTween(rotateOutTimeLine)
-        .addTo(orbitTextController);
+    const rotateOutStart = start + distanceToNextAnimation;
+    addRotateOutAnimation(element, rotateOutStart);
 }
 
 function addRotateInAnimation(element, start) {
     let rotateInTimeLine = new TimelineMax();
-    rotateInTimeLine.to(element, 4, { x: 0, rotationY: 0, opacity: 3 });
+    rotateInTimeLine.to(element, 4, {x: 0, rotationY: 0, opacity: 3});
 
     new ScrollMagic.Scene({
         duration: rotateInOutDuration,
         offset: start
     })
         .setTween(rotateInTimeLine)
+        .addTo(orbitTextController);
+}
+
+function addRotateOutAnimation(element, start) {
+    let rotateOutTimeLine = new TimelineMax();
+    rotateOutTimeLine.to(element, 4, {x: 400, rotationY: 70, opacity: 0});
+
+    new ScrollMagic.Scene({
+        duration: rotateInOutDuration,
+        offset: start
+    })
+        .setTween(rotateOutTimeLine)
         .addTo(orbitTextController);
 }
