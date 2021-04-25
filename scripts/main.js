@@ -97,13 +97,13 @@ function addKennedyAwardModel(){
 
         let kennedyCollisionMesh = addKennedyCollisionMesh(model);
 
-        scene.add(kennedyAwardModel);
-
         modelList.push({
             model: kennedyAwardModel,
             originalPosition: kennedyAwardModel.position.clone(),
             collisionMesh: kennedyCollisionMesh
         });
+
+        scene.add(kennedyAwardModel);
     }, undefined, function (error) {
         console.error(error);
     });
@@ -133,13 +133,13 @@ function addPeabodyAwardModel(){
 
         let peabodyCollisionMesh = addPeabodyCollisionMesh(model);
 
-        scene.add(peabodyAwardModel);
-
         modelList.push({
             model: peabodyAwardModel,
             originalPosition: peabodyAwardModel.position.clone(),
             collisionMesh: peabodyCollisionMesh
         });
+
+        scene.add(peabodyAwardModel);
     }, undefined, function (error) {
         console.error(error);
     });
@@ -173,13 +173,13 @@ function addMarkTwainAwardModel(){
 
         let markTwainCollisionMesh = addMarkTwainCollisionMesh(model);
 
-        scene.add(markTwainAwardModel);
-
         modelList.push({
             model: markTwainAwardModel,
             originalPosition: markTwainAwardModel.position.clone(),
             collisionMesh: markTwainCollisionMesh
         });
+
+        scene.add(markTwainAwardModel);
     }, undefined, function (error) {
         console.error(error);
     });
