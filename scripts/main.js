@@ -340,11 +340,15 @@ function getRayIntersections(event){
 }
 
 async function selectModel(model){
-    modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
+    if (allModelsLoaded() == false){
+        return;
+    }
 
     if (model == selectedModel){
         return;
     }
+
+    modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
     
     selectedModel = model;
 
@@ -353,6 +357,14 @@ async function selectModel(model){
     onModelSelected(selectedModel);
 
     window.scrollTo(0, 0);
+}
+
+function allModelsLoaded(){
+    let anyAwardNull = kennedyAwardModel == null || peabodyAwardModel == null || markTwainAwardModel == null;
+    if(anyAwardNull){
+        return false;
+    }
+    return true;
 }
 
 function onModelSelected(model){
