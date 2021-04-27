@@ -434,6 +434,14 @@ function updateCornerPosition(){
     if (selectedModel == null){
         return;
     }
+
+    let areModelsClose = areModelsCloseToOriginalPosition();
+    console.log(areModelsClose);
+    
+    if(areModelsClose){
+        window.scrollTo(0,document.body.scrollHeight);
+        return;
+    }
     
     let newCornerPosition = getCornerVector();
     modelList.forEach(({model}) =>{
@@ -442,6 +450,19 @@ function updateCornerPosition(){
             newCornerPosition.x += cornerModelSpacing;
         }
     });
+}
+
+function areModelsCloseToOriginalPosition(){
+    let maxDelta = 5;
+    for(index = 0; index < modelList.length; index++){
+        model = modelList[index].model;
+        originalPosition = modelList[index].originalPosition;
+        let distanceToOriginalPosition = model.position.distanceTo(originalPosition);
+        if(distanceToOriginalPosition > maxDelta){
+            return false;
+        }
+    }
+    return true;
 }
 
 function getCornerVector(){
