@@ -265,7 +265,7 @@ let getScrollSpeed = function(){
     clear();
 
     return () =>{
-        newPosition = window.scrollY;
+        newPosition = window.pageYOffset;
         if (lastPosition != null){ 
             delta = newPosition - lastPosition;
         }
