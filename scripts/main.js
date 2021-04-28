@@ -369,6 +369,7 @@ function allModelsLoaded(){
 
 function onModelSelected(model){
     enableModelRotation();
+    enableCornerPositionUpdate();
     moveModelsToSelectionPositions(model);
     addMoveModelToTheSideController(model);
     modelsToOriginalPositionOnScroll();
@@ -430,7 +431,14 @@ function moveModelsToCorner(selectedModel){
     });
 }
 
+let canUpdateCornerPosition = true;
+
 function updateCornerPosition(){
+    if(canUpdateCornerPosition == false){
+        window.scrollTo(0, document.body.scrollHeight);
+        return;
+    }
+
     if (selectedModel == null){
         return;
     }
@@ -442,6 +450,14 @@ function updateCornerPosition(){
             newCornerPosition.x += cornerModelSpacing;
         }
     });
+}
+
+function toggleCanUpdateCornerPosition(){
+    canUpdateCornerPosition = !canUpdateCornerPosition;
+}
+
+function enableCornerPositionUpdate(){
+    canUpdateCornerPosition = true;
 }
 
 function getCornerVector(){
@@ -541,14 +557,19 @@ function modelsToOriginalPositionOnScroll(){
 
     let scrollDuration = 1.5*window.innerHeight;
 
+    let lastMoveToOriginalPositionScene;
     modelList.forEach(({model, originalPosition}) =>{
-        new ScrollMagic.Scene({
+        lastMoveToOriginalPositionScene = new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
             duration: scrollDuration,
             triggerHook: 0.1
         })
             .setTween(model.position, 1, {x: originalPosition.x, y: originalPosition.y, z: originalPosition.z})
             .addTo(moveToOriginalPositionController);
+    });
+
+    lastMoveToOriginalPositionScene.on("start", () => {
+        toggleCanUpdateCornerPosition();
     });
 
     rotateModelToForwardOnScroll(scrollDuration);
