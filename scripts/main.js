@@ -273,7 +273,7 @@ let getScrollSpeed = function(){
         }
         lastPosition = newPosition;
         clearTimeout(timer);
-        timer = setTimeout(clear, delay);
+        timer = setTimeout(clear, clearDelay);
         return delta;
     }
 }();
