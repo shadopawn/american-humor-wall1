@@ -226,7 +226,9 @@ window.addEventListener("resize", () => {
 let angularVelocity = 0;
 
 window.onscroll = () =>{
-    angularVelocity = getScrollSpeed()/2000;
+    let scrollSpeed = getScrollSpeed();
+    //console.log(scrollSpeed);
+    angularVelocity = scrollSpeed/2000;
 }
 
 let modelRotationEnabled = true;
@@ -255,7 +257,7 @@ function enableModelRotation(){
 
 let getScrollSpeed = function(){
     let lastPosition, newPosition, timer, delta;
-    delay = 50; // in "ms" (higher means lower fidelity)
+    clearDelay = 500; // in "ms" (higher means lower fidelity)
 
     function clear() {
         lastPosition = null;
