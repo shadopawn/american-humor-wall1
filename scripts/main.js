@@ -226,6 +226,7 @@ window.addEventListener("resize", () => {
 let angularVelocity = 0;
 
 window.onscroll = () =>{
+    // the scroll speed is higher when using a scroll wheel on a mac
     let scrollSpeed = getScrollSpeed();
     angularVelocity = scrollSpeed/2000;
 }
