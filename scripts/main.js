@@ -227,7 +227,6 @@ let angularVelocity = 0;
 
 window.onscroll = () =>{
     let scrollSpeed = getScrollSpeed();
-    //console.log(scrollSpeed);
     angularVelocity = scrollSpeed/2000;
 }
 
