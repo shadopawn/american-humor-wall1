@@ -363,7 +363,7 @@ async function selectModel(model){
 
 function allModelsLoaded(){
     let anyAwardNull = kennedyAwardModel == null || peabodyAwardModel == null || markTwainAwardModel == null;
-    if(anyAwardNull){
+    if (anyAwardNull){
         return false;
     }
     return true;
