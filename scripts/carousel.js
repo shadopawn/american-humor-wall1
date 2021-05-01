@@ -29,7 +29,7 @@ function initializeFlickity(){
 
     addPreviousNameParagraphElement();
 
-    initializeNames();
+    setInitialNames();
     flickity.on('change', index => {
         setPreviousNextNames(index);
     });
@@ -43,7 +43,7 @@ function addPreviousNameParagraphElement(){
     previousName = addParagraphElement(".flickity-prev-next-button.previous", "previous-carousel-name");
 }
 
-function initializeNames(){
+function setInitialNames(){
     setPreviousNextNames(0);
 }
 
