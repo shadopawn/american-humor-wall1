@@ -2,6 +2,7 @@
 
 To view a live version of this project click [here](https://shadopawn.github.io/american-humor-wall1/).
 
+This repo is a single page in a larger project that can be seen [here](http://www.thanksforlaughing.com/#/launch).
 
 ## To Run locally
 
