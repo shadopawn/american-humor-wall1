@@ -361,8 +361,8 @@ async function selectModel(model){
 }
 
 function allModelsLoaded(){
-    let noAwardsNull = kennedyAwardModel != null && peabodyAwardModel != null && markTwainAwardModel != null;
-    return noAwardsNull;
+    let allModelsNotNull = kennedyAwardModel != null && peabodyAwardModel != null && markTwainAwardModel != null;
+    return allModelsNotNull;
 }
 
 function onModelSelected(model){
