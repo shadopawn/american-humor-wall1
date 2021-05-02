@@ -79,7 +79,6 @@ function applyLightSettings(light){
 const loader = new THREE.GLTFLoader();
 let kennedyAwardModel, peabodyAwardModel, markTwainAwardModel;
 let selectedModel;
-// based on model load time the modelList order isn't always consistent
 // modelList contains objects with the model, originalPosition and collisionMesh
 let modelList = [];
 
@@ -286,7 +285,6 @@ function onMouseMove(event){
 }
 
 function setMouseCursorStyle(event){
-    // possibly update only if mouse position has sufficient delta
     if(event){
         let intersectedModel = getIntersectedModel(event)
         if(intersectedModel != selectedModel && intersectedModel != null){
@@ -350,6 +348,7 @@ async function selectModel(model){
         return;
     }
 
+    // based on model load time the modelList order isn't always consistent
     modelList.sort((a, b) => (a.originalPosition.x < b.originalPosition.x) ? 1 : -1);
     
     selectedModel = model;
