@@ -93,6 +93,7 @@ canvas {
 .quote{
     font-family: 'Source Serif Pro', serif;
     margin-top: 0px;
+    font-size: 1.8rem;
     margin-bottom: 2px;
     font-weight: 700;
 }
@@ -185,4 +186,33 @@ canvas {
 .footnotes p{
     margin: 0px;
     line-height: 1.6;
+}
+
+.wrapped-side-by-side > *:first-child {
+    float: left;
+    padding-right: 20px;
+}
+
+.medium-margin-top {
+    margin-top: 60px;
+}
+
+figure.caption-right {
+    display: flex;
+    width: 100%;
+}
+
+figure.caption-right > * {
+    flex: 1
+}
+
+figure.caption-right img {
+    width: 50%;
+    height: auto;
+}
+
+figure.caption-right figcaption {
+    background-color: #080a1ccc;
+    align-self: center;
+    padding: 15px;
 }
