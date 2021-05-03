@@ -198,7 +198,7 @@ function addMarkTwainCollisionMesh(model){
 
 function applyMeshSettings(model){
     model.traverse(mesh => { 
-        if (mesh.isMesh) {
+        if (mesh.isMesh){
             mesh.castShadow = true;
             mesh.receiveShadow = true;
             if(mesh.material.map)
