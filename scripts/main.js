@@ -265,7 +265,7 @@ let getScrollSpeed = function(){
 
     clear();
 
-    return () =>{
+    return () => {
         newPosition = window.pageYOffset;
         if (lastPosition != null){ 
             delta = newPosition - lastPosition;
@@ -418,7 +418,7 @@ const cornerModelSpacing = -18;
 
 function moveModelsToCorner(selectedModel){
     let newCornerPosition = getCornerVector();
-    modelList.forEach(({model}) =>{
+    modelList.forEach(({model}) => {
         if (model != selectedModel){
             moveModelToPosition(model, newCornerPosition);
             newCornerPosition.x += cornerModelSpacing;
@@ -442,7 +442,7 @@ function updateCornerPosition(){
     }
     
     let newCornerPosition = getCornerVector();
-    modelList.forEach(({model}) =>{
+    modelList.forEach(({model}) => {
         if (model != selectedModel){
             model.position.copy(newCornerPosition);
             newCornerPosition.x += cornerModelSpacing;
