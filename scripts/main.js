@@ -224,7 +224,7 @@ window.addEventListener("resize", () => {
 
 let angularVelocity = 0;
 
-window.onscroll = () =>{
+window.onscroll = () => {
     // the scroll speed is higher when using a scroll wheel on a mac
     let scrollSpeed = getScrollSpeed();
     angularVelocity = scrollSpeed/2000;
@@ -286,7 +286,7 @@ function onMouseMove(event){
 
 function setMouseCursorStyle(event){
     if(event){
-        let intersectedModel = getIntersectedModel(event)
+        let intersectedModel = getIntersectedModel(event);
         if(intersectedModel != selectedModel && intersectedModel != null){
             document.body.style.cursor = "pointer";
         }
@@ -407,7 +407,6 @@ function addBottomSpacer(){
     let rightSide = document.getElementById('right-side');
     rightSide.appendChild(bottomDiv);
 }
-
 
 function moveModelsToSelectionPositions(selectedModel){
     moveModelToCenter(selectedModel);
@@ -556,7 +555,7 @@ function modelsToOriginalPositionOnScroll(){
     let scrollDuration = 1.5*window.innerHeight;
 
     let lastMoveToOriginalPositionScene;
-    modelList.forEach(({model, originalPosition}) =>{
+    modelList.forEach(({model, originalPosition}) => {
         lastMoveToOriginalPositionScene = new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
             duration: scrollDuration,
@@ -576,7 +575,7 @@ function modelsToOriginalPositionOnScroll(){
 function rotateModelToForwardOnScroll(scrollDuration){
     let rotationScenes = [];
 
-    modelList.forEach(({model}) =>{
+    modelList.forEach(({model}) => {
         let rotationScene = new ScrollMagic.Scene({
             triggerElement: "#bottom-spacer",
             duration: scrollDuration,
@@ -590,7 +589,7 @@ function rotateModelToForwardOnScroll(scrollDuration){
         });
     });
 
-    rotationScenes.forEach(({scene, sceneModel}) =>{
+    rotationScenes.forEach(({scene, sceneModel}) => {
         scene.on("start", () => {
             let forwardYRotation = getNearestForwardRotation(sceneModel);
             scene.setTween(sceneModel.rotation, 1, {y: forwardYRotation});
