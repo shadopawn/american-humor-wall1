@@ -29,7 +29,7 @@ function setupCamera(){
 
 function setupRenderer(){
     renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
-    renderer.setClearColor(0xdddddd, 0 );
+    renderer.setClearColor(0xdddddd, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
