@@ -8,4 +8,4 @@ This repo is a single page in a larger project that can be seen [here](http://ww
 
 To run this project locally open the index.html file using a local server.
 
-If using visual studio code [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is a good extension to do this. Once installed right click on the index.html file and click Open with Live Server
+If using visual studio code [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is a good extension to do this. Once installed right click on the index.html file and click `Open with Live Server`
